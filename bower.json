@@ -1,0 +1,19 @@
+{
+  "name": "adze",
+  "version": "0.0.0",
+  "authors": [
+    "Adrien Cahen <adrien@continuuity.com>"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "dependencies": {
+    "angular": "~1.2.21",
+    "bootstrap": "~3.2.0",
+    "angular-strap": "~2.0.5"
+  }
+}
