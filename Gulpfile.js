@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 
 gulp.task('style', ['fonts'], function() {
   return gulp.src([
-      './bower_components/angular/angular-csp.min.css',
+      './bower_components/angular/angular-csp.css',
       './bower_components/bootstrap/dist/css/bootstrap.min.css',
       './bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
       './bower_components/angular-motion/dist/angular-motion.min.css',
@@ -14,7 +14,7 @@ gulp.task('style', ['fonts'], function() {
     .pipe(plug.concat('style.css'))
     .pipe(plug.autoprefixer(["> 1%"], {cascade:true}))
     .pipe(gulp.dest('./dist/bundle'))
-    .pipe(plug.filesize());
+    .pipe(plug.size({showFiles:true, gzip:true}));
 });
 
 
@@ -42,7 +42,7 @@ gulp.task('js:vendor', function() {
     .pipe(plug.concat('vendor.js'))
     .pipe(plug.uglify())
     .pipe(gulp.dest('./dist/bundle'))
-    .pipe(plug.filesize());
+    .pipe(plug.size({showFiles:true, gzip:true}));
 });
 
 
@@ -56,7 +56,7 @@ gulp.task('js:app', function() {
     }))
     .pipe(plug.concat('app.js'))
     .pipe(gulp.dest('./dist/bundle'))
-    .pipe(plug.filesize());
+    .pipe(plug.size({showFiles:true, gzip:true}));
 });
 
 
@@ -66,7 +66,7 @@ gulp.task('js:app:min', ['js:app'], function() {
     .pipe(plug.uglify())
     .pipe(plug.concat('app.min.js'))
     .pipe(gulp.dest('./dist/bundle'))
-    .pipe(plug.filesize());
+    .pipe(plug.size({showFiles:true, gzip:true}));
 });
 
 
