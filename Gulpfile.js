@@ -2,29 +2,47 @@ var gulp = require('gulp'),
     plug = require('gulp-load-plugins')();
 
 
+gulp.task('style', ['fonts'], function() {
+  return gulp.src([
+      './bower_components/angular/angular-csp.min.css',
+      './bower_components/bootstrap/dist/css/bootstrap.min.css',
+      './bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
+      './bower_components/angular-motion/dist/angular-motion.min.css',
+      './app/css/style.less'
+    ])
+    .pipe(plug.if('*.less', plug.less()))
+    .pipe(plug.concat('style.css'))
+    .pipe(plug.autoprefixer(["> 1%"], {cascade:true}))
+    .pipe(gulp.dest('./dist/bundle'))
+    .pipe(plug.filesize());
+});
+
+
+gulp.task('fonts', function() {
+  return gulp.src('./bower_components/bootstrap/dist/fonts/*')
+    .pipe(gulp.dest('./dist/fonts'));
+});
+
+
 gulp.task('js:vendor', function() {
   return gulp.src([
       './bower_components/angular/angular.min.js',
 
-      './bower_components/angular-animate/angular-animate.js',
+      './bower_components/angular-animate/angular-animate.min.js',
 
-      './bower_components/angular-strap/dist/modules/dimensions.js',
-      './bower_components/angular-strap/dist/modules/navbar.js',
-      './bower_components/angular-strap/dist/modules/tooltip.js',
-      './bower_components/angular-strap/dist/modules/tooltip.tpl.js',
-      './bower_components/angular-strap/dist/modules/dropdown.js',
-      './bower_components/angular-strap/dist/modules/dropdown.tpl.js',
-      './bower_components/angular-strap/dist/modules/modal.js',
-      './bower_components/angular-strap/dist/modules/modal.tpl.js',
-      './bower_components/angular-strap/dist/modules/alert.js',
-      './bower_components/angular-strap/dist/modules/alert.tpl.js',
-      './bower_components/angular-strap/dist/modules/popover.js',
-      './bower_components/angular-strap/dist/modules/popover.tpl.js'
+      './bower_components/angular-strap/dist/modules/dimensions.min.js',
+      './bower_components/angular-strap/dist/modules/navbar.min.js',
+      './bower_components/angular-strap/dist/modules/tooltip.{min,tpl.min}.js',
+      './bower_components/angular-strap/dist/modules/dropdown.{min,tpl.min}.js',
+      './bower_components/angular-strap/dist/modules/modal.{min,tpl.min}.js',
+      './bower_components/angular-strap/dist/modules/alert.{min,tpl.min}.js',
+      './bower_components/angular-strap/dist/modules/popover.{min,tpl.min}.js'
 
     ])
     .pipe(plug.concat('vendor.js'))
-    .pipe(plug.uglify({preserveComments:'all'}))
-    .pipe(gulp.dest('./dist/bundle'));
+    .pipe(plug.uglify())
+    .pipe(gulp.dest('./dist/bundle'))
+    .pipe(plug.filesize());
 });
 
 
@@ -37,7 +55,8 @@ gulp.task('js:app', function() {
        footer: '\n})();\n'
     }))
     .pipe(plug.concat('app.js'))
-    .pipe(gulp.dest('./dist/bundle'));
+    .pipe(gulp.dest('./dist/bundle'))
+    .pipe(plug.filesize());
 });
 
 
@@ -46,29 +65,8 @@ gulp.task('js:app:min', ['js:app'], function() {
   return gulp.src('./dist/bundle/app.js')
     .pipe(plug.uglify())
     .pipe(plug.concat('app.min.js'))
-    .pipe(gulp.dest('./dist/bundle'));
-});
-
-
-
-gulp.task('style', ['fonts'], function() {
-  return gulp.src([
-      './bower_components/angular/angular-csp.min.css',
-      './bower_components/bootstrap/dist/css/bootstrap.min.css',
-      './bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
-      './bower_components/angular-motion/dist/angular-motion.min.css',
-      './app/css/style.less'
-    ])
-    .pipe(plug.if('*.less', plug.less()))
-    .pipe(plug.concat('style.css'))
-    .pipe(plug.autoprefixer(["> 1%"], {cascade:true}))
-    .pipe(gulp.dest('./dist/bundle'));
-});
-
-
-gulp.task('fonts', function() {
-  return gulp.src('./bower_components/bootstrap/dist/fonts/*')
-    .pipe(gulp.dest('./dist/fonts'));
+    .pipe(gulp.dest('./dist/bundle'))
+    .pipe(plug.filesize());
 });
 
 
