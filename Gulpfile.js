@@ -2,29 +2,37 @@ var gulp = require('gulp'),
     plug = require('gulp-load-plugins')();
 
 
-gulp.task('style', ['fonts'], function() {
+gulp.task('css:lib', ['fonts'], function() {
   return gulp.src([
       './bower_components/angular/angular-csp.css',
       './bower_components/bootstrap/dist/css/bootstrap.min.css',
       './bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
-      './bower_components/angular-motion/dist/angular-motion.min.css',
-      './app/css/style.less'
+      './bower_components/angular-motion/dist/angular-motion.min.css'
     ])
-    .pipe(plug.if('*.less', plug.less()))
-    .pipe(plug.concat('style.css'))
-    .pipe(plug.autoprefixer(["> 1%"], {cascade:true}))
+    .pipe(plug.concat('lib.css'))
     .pipe(gulp.dest('./dist/bundle'))
     .pipe(plug.size({showFiles:true, gzip:true}));
 });
-
 
 gulp.task('fonts', function() {
   return gulp.src('./bower_components/bootstrap/dist/fonts/*')
     .pipe(gulp.dest('./dist/fonts'));
 });
 
+gulp.task('css:app', function() {
+  return gulp.src([
+      './app/js/directives/**/*.{less,css}',
+      './app/css/style.less'
+    ])
+    .pipe(plug.if('*.less', plug.less()))
+    .pipe(plug.concat('app.css'))
+    .pipe(plug.autoprefixer(["> 1%"], {cascade:true}))
+    .pipe(gulp.dest('./dist/bundle'))
+    .pipe(plug.size({showFiles:true, gzip:true}));
+});
 
-gulp.task('js:vendor', function() {
+
+gulp.task('js:lib', function() {
   return gulp.src([
       './bower_components/angular/angular.min.js',
 
@@ -40,7 +48,7 @@ gulp.task('js:vendor', function() {
       './bower_components/angular-strap/dist/modules/popover.{min,tpl.min}.js'
 
     ])
-    .pipe(plug.concat('vendor.js'))
+    .pipe(plug.concat('lib.js'))
     .pipe(plug.uglify())
     .pipe(gulp.dest('./dist/bundle'))
     .pipe(plug.size({showFiles:true, gzip:true}));
@@ -55,9 +63,10 @@ gulp.task('js:app', function() {
        header: '\n(function(/* ${filename} */){\n',
        footer: '\n})();\n'
     }))
+    // .pipe(plug.size({showFiles:true}))
     .pipe(plug.concat('app.js'))
     .pipe(gulp.dest('./dist/bundle'))
-    .pipe(plug.size({showFiles:true, gzip:true}));
+    .pipe(plug.size({gzip:true, title: 'app.js'}));
 });
 
 
@@ -103,11 +112,15 @@ gulp.task('clean', function() {
 });
 
 
-gulp.task('build', ['js:vendor', 'js:app', 'style', 'img', 'tpl', 'html']);
+gulp.task('lib', ['js:lib', 'css:lib']);
+gulp.task('app', ['js:app', 'css:app']);
+gulp.task('js', ['js:lib', 'js:app']);
+gulp.task('css', ['css:lib', 'css:app']);
+gulp.task('style', ['css']);
 
+gulp.task('build', ['js', 'css', 'img', 'tpl', 'html']);
 
 gulp.task('default', ['lint', 'build']);
-
 
 gulp.task('watch', ['build'], function() {
   plug.livereload.listen();
@@ -116,7 +129,7 @@ gulp.task('watch', ['build'], function() {
     .on('change', plug.livereload.changed);
 
   gulp.watch('./app/**/*.js', ['js:app']);
-  gulp.watch('./app/css/**/*.{less,css}', ['style']);
+  gulp.watch('./app/**/*.{less,css}', ['css:app']);
   gulp.watch('./app/img/**/*', ['img']);
   gulp.watch('./app/tpl/**/*', ['tpl']);
   gulp.watch('./app/*.html', ['html']);
