@@ -1,7 +1,7 @@
 var app = angular.module('adze');
 
 
-app.controller('BodyController', function($scope) {
+app.controller('BodyCtrl', function($scope) {
   $scope.dropdown = [
     {
       "text": "<i class=\"glyphicon glyphicon-download\"></i>&nbsp;Another action",
