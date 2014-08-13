@@ -28,6 +28,7 @@ gulp.task('js:vendor', function() {
   return gulp.src([
       './bower_components/angular/angular.min.js',
 
+      './bower_components/angular-sanitize/angular-sanitize.min.js',
       './bower_components/angular-animate/angular-animate.min.js',
 
       './bower_components/angular-strap/dist/modules/dimensions.min.js',

@@ -1,6 +1,7 @@
 angular
   .module('adze', [
     'ngAnimate', 
+    'ngSanitize', 
     'mgcrea.ngStrap.navbar',
     'mgcrea.ngStrap.tooltip',
     'mgcrea.ngStrap.dropdown',
