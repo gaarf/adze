@@ -1,1 +1,1 @@
-<button></button>
+clicky <strong>{{thing}}</strong>

@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
-    plug = require('gulp-load-plugins')();
-
+    plug = require('gulp-load-plugins')(),
+    pkg = require('./package.json');
 
 gulp.task('css:lib', ['fonts'], function() {
   return gulp.src([
@@ -87,13 +87,16 @@ gulp.task('img', function() {
 
 
 gulp.task('tpl', function() {
-  return gulp.src('./app/tpl/*')
-    .pipe(gulp.dest('./dist/tpl'));
+  return gulp.src('./app/js/directives/**/*.tpl')
+    .pipe(plug.angularTemplatecache('tpl.js', {
+      module: pkg.name
+    }))
+    .pipe(gulp.dest('./dist/bundle'));
 });
 
 
 gulp.task('html', function() {
-  return gulp.src('./app/*.html')
+  return gulp.src('./app/**/*.html')
     .pipe(gulp.dest('./dist'));
 });
 
@@ -130,7 +133,8 @@ gulp.task('watch', ['build'], function() {
 
   gulp.watch('./app/**/*.js', ['js:app']);
   gulp.watch('./app/**/*.{less,css}', ['css:app']);
+  gulp.watch('./app/js/directives/**/*.tpl', ['tpl']);
+  gulp.watch('./app/**/*.html', ['html']);
   gulp.watch('./app/img/**/*', ['img']);
-  gulp.watch('./app/tpl/**/*', ['tpl']);
-  gulp.watch('./app/*.html', ['html']);
+
 });
