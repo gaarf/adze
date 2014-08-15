@@ -17,9 +17,11 @@
   </ul>
   <ul class="nav navbar-nav navbar-right">
 
+    <li ui-sref-active="active"><a ui-sref="contact">Contact</a></li>
+
     <li class="dropdown">
       <a href="" class="dropdown-toggle">
-        <span class="caret"></span> Dropdown
+        Welcome {{foo}}! <span class="caret"></span>
       </a>
     </li>
 

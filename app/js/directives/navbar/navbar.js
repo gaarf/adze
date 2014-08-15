@@ -1,11 +1,19 @@
 var app = angular.module('adze');
 
-app.directive('myNavbar', function($dropdown, $log) {
+app.directive('myNavbar', function($dropdown, $alert) {
   return {
     restrict: 'A',
     templateUrl: 'navbar/navbar.tpl',
-    scope: true,
+
+    scope: {},
+
     link: function(scope, element, attrs) {
+
+      scope.foo = 'bar';
+
+      scope.navbarAlert = function(type, content) {
+        $alert({title:'from navbar', content:content, type:type});
+      };
 
       $dropdown(angular.element(element[0].querySelector('a.dropdown-toggle')), {
         template: 'navbar/dropdown.tpl',
@@ -13,11 +21,6 @@ app.directive('myNavbar', function($dropdown, $log) {
         placement: 'bottom-right',
         scope: scope
       });
-
-      scope.foo = 'bar';
-      scope.log = function(it) {
-        $log.log(scope, it);
-      };
 
     }
   };

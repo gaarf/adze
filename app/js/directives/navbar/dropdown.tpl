@@ -1,19 +1,26 @@
 <ul class="dropdown-menu dropdown-menu-right" role="menu" style="left:auto">
+  <li role="presentation" class="dropdown-header">alerts</li>
   <li role="presentation">
-    <a role="menuitem" tabindex="-1" href="" ng-click="log(foo)">
-      Log Something {{foo}}
+    <a role="menuitem" tabindex="-1" href="" ng-click="navbarAlert('warning', foo)">
+      Warn {{foo}}
     </a>
   </li>
   <li role="presentation">
-    <a role="menuitem" tabindex="-1" href="" ng-click="log('hello else!')">
-      Log Something Else
+    <a role="menuitem" tabindex="-1" href="" ng-click="navbarAlert('info', foo)">
+      Info {{foo}}
     </a>
   </li>
   <li role="presentation" class="divider"></li>
   <li role="presentation">
+    <a role="menuitem" tabindex="-1" ui-sref="contact">
+      <i class="glyphicon glyphicon-paperclip"></i>
+      Contact
+    </a>
+  </li>
+  <li role="presentation">
     <a role="menuitem" tabindex="-1" href="">
-      <i class="glyphicon glyphicon-download"></i>
-      Yay!
+      <i class="glyphicon glyphicon-glass"></i>
+      Yay! {{bodyString}}
     </a>
   </li>
 </ul>

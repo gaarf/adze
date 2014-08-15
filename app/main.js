@@ -17,6 +17,7 @@ angular
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
   })
+
   .config(function ($stateProvider, $urlRouterProvider) {
 
       /////////////////////////////
@@ -49,5 +50,14 @@ angular
           templateUrl: '/partials/contact.html'
         })
 
+        ;
+  })
 
-  });
+  .config(function ($alertProvider) {
+    angular.extend($alertProvider.defaults, {
+      animation: 'am-fade-and-slide-top',
+      container: '#alerts > .container'
+    });
+  })
+
+  ;

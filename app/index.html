@@ -17,11 +17,20 @@
       <div class="container" role="navigation" my-navbar></div>
     </header>
 
-    <main class="container" ui-view></main>
+    <main class="container">
+      <div ui-view></div>
+    </main>
+
+    <div id="alerts">
+      <div class="container"></div>
+    </div>
 
     <footer>
       <div class="container">
-        <p class="text-muted">&copy; 2014 @gaarf</p>
+        <p class="text-muted">
+          <small>{{$state}}</small>
+          <span class="pull-right">&copy; 2014 @gaarf
+        </p>
       </div>
     </footer>
 
