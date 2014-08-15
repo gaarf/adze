@@ -39,8 +39,9 @@ gulp.task('js:lib', function() {
       './bower_components/angular-sanitize/angular-sanitize.min.js',
       './bower_components/angular-animate/angular-animate.min.js',
 
+      './bower_components/angular-ui-router/release/angular-ui-router.min.js',
+
       './bower_components/angular-strap/dist/modules/dimensions.min.js',
-      './bower_components/angular-strap/dist/modules/navbar.min.js',
       './bower_components/angular-strap/dist/modules/tooltip.{min,tpl.min}.js',
       './bower_components/angular-strap/dist/modules/dropdown.{min,tpl.min}.js',
       './bower_components/angular-strap/dist/modules/modal.{min,tpl.min}.js',
@@ -66,7 +67,7 @@ gulp.task('js:app', function() {
     // .pipe(plug.size({showFiles:true}))
     .pipe(plug.concat('app.js'))
     .pipe(gulp.dest('./dist/bundle'))
-    .pipe(plug.size({gzip:true, title: 'app.js'}));
+    .pipe(plug.size({showFiles:true, gzip:true}));
 });
 
 
@@ -87,11 +88,22 @@ gulp.task('img', function() {
 
 
 gulp.task('tpl', function() {
-  return gulp.src('./app/js/directives/**/*.tpl')
+  return gulp.src([
+      './app/partials/home.html',
+      './app/js/directives/**/*.tpl'
+    ])
+    .pipe(plug.size({showFiles:true}))
     .pipe(plug.angularTemplatecache('tpl.js', {
-      module: pkg.name
+      module: pkg.name,
+      base: function(file) {
+        return file.path.replace(
+          0<file.base.indexOf('app/js/directives')
+          ? file.base : __dirname + '/app', ''
+        );
+      }
     }))
-    .pipe(gulp.dest('./dist/bundle'));
+    .pipe(gulp.dest('./dist/bundle'))
+    .pipe(plug.size({showFiles:true, gzip:true}));
 });
 
 

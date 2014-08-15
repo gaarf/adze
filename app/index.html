@@ -11,14 +11,13 @@
     <link rel="stylesheet" type="text/css" href="/bundle/lib.css" />
     <link rel="stylesheet" type="text/css" href="/bundle/app.css" />
 </head>
-<body ng-cloak ng-controller="BodyCtrl">
+<body ng-controller="BodyCtrl">
 
     <header class="navbar navbar-default navbar-fixed-top">
-      <div class="container" role="navigation" my-topnav></div>
+      <div class="container" role="navigation" my-navbar></div>
     </header>
 
-    <main class="container" ng-include="'/partials/home.html'">
-    </main>
+    <main class="container" ui-view></main>
 
     <footer>
       <div class="container">

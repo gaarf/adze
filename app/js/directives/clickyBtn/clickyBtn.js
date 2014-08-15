@@ -13,8 +13,6 @@ app.directive('myClickyBtn', function(dateFilter) {
       function changeThing() {
         element.toggleClass('btn-success btn-danger');
 
-        console.log(this, arguments);
-
         scope.$apply(function(){
           scope.thing = dateFilter(Date.now(), 'mediumTime');
         });
