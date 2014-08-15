@@ -1,9 +1,9 @@
 var app = angular.module('adze');
 
 
-app.controller('BodyCtrl', function($scope, $log) {
+app.controller('BodyCtrl', function ($scope, $log) {
 
-  $scope.bodyLogger = function(it) {
+  $scope.bodyLogger = function (it) {
     $log.log(it, 'logged from BodyCtrl');
   };
 
@@ -14,5 +14,7 @@ app.controller('BodyCtrl', function($scope, $log) {
     "content": "Best check yo self, you're not looking too good.",
     "type": "info"
   };
+
+  $scope.something = 'OMG where is Kenny?';
 
 });

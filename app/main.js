@@ -9,6 +9,7 @@ angular
     'mgcrea.ngStrap.alert',
     'mgcrea.ngStrap.popover'
   ])
+
   .run(function ($rootScope, $state, $stateParams) {
     // It's very handy to add references to $state and $stateParams to the $rootScope
     // so that you can access them from any scope within your applications.For example,
@@ -47,8 +48,28 @@ angular
 
         .state('contact', {
           url: '/contact',
-          templateUrl: '/partials/contact.html'
+          templateUrl: '/partials/contact.html',
+          controller: 'ContactCtrl'
         })
+
+          .state('contact.modal', {
+            url: '/modal',
+            onEnter: function($state, $modal) {
+              var m = $modal({
+                title: 'My Modal',
+                contentTemplate: '/partials/lipsum.html',
+                show: false
+              });
+
+              m.$scope.$on('modal.hide', function(){
+                $state.transitionTo('contact');
+              });
+
+              m.$promise.then(function() {
+                m.show();
+              });
+            }
+          })
 
         ;
   })

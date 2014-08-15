@@ -12,9 +12,9 @@
   </li>
   <li role="presentation" class="divider"></li>
   <li role="presentation">
-    <a role="menuitem" tabindex="-1" ui-sref="contact">
+    <a role="menuitem" tabindex="-1" ui-sref="contact.modal">
       <i class="glyphicon glyphicon-paperclip"></i>
-      Contact
+      Contact/modal
     </a>
   </li>
   <li role="presentation">

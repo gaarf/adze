@@ -17,7 +17,7 @@
   </ul>
   <ul class="nav navbar-nav navbar-right">
 
-    <li ui-sref-active="active"><a ui-sref="contact">Contact</a></li>
+    <li ui-sref-active="active"><a ui-sref="contact.modal">Contact/modal</a></li>
 
     <li class="dropdown">
       <a href="" class="dropdown-toggle">
