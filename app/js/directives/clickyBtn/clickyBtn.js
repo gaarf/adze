@@ -1,12 +1,12 @@
 var app = angular.module('adze');
 
 
-app.directive('clickyBtn', function(dateFilter) {
+app.directive('myClickyBtn', function(dateFilter) {
   return {
     restrict: 'A',
     templateUrl: 'clickyBtn/clickyBtn.tpl',
     scope: {
-      thing: '@clickyBtn'
+      thing: '@myClickyBtn'
     },
     link: function(scope, element, attrs) {
 

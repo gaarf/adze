@@ -10,13 +10,12 @@
 <div class="collapse navbar-collapse" ng-class="{in:navbarCollapsed}" bs-header>
   <ul class="nav navbar-nav">
 
-    <li><a href="#">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#/" data-match-route="/">Home</a></li>
+    <li><a href="#/about" data-match-route="/about.*">About</a></li>
+    <li><a href="#/contact" data-match-route="/contact">Contact</a></li>
 
     <li class="dropdown">
-      <a href="#" class="dropdown-toggle" bs-dropdown="dropdown" data-html="true" data-animation="am-flip-x">Dropdown 
-        <span class="caret"></span></a>
+      <a href="" class="dropdown-toggle">Dropdown <span class="caret"></span></a>
     </li>
 
   </ul>
