@@ -5,11 +5,9 @@ app.directive('myNavbar', function($dropdown, $alert) {
     restrict: 'A',
     templateUrl: 'navbar/navbar.tpl',
 
-    scope: {},
+    // scope: {},
 
     link: function(scope, element, attrs) {
-
-      scope.foo = 'bar';
 
       scope.navbarAlert = function(type, content) {
         $alert({title:'from navbar', content:content, type:type});

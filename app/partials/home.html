@@ -2,6 +2,15 @@
   <h1>Hello World</h1>
 </div>
 
+<form class="form-inline" role="form">
+  <div class="input-group input-group-lg">
+    <span class="input-group-addon">{{something}}</span>
+    <input type="text" class="form-control" ng-model="somebody.name">
+  </div>
+</form>
+
+<hr>
+
 <p>
   <button my-clicky-btn="hello">A button</button>
 
@@ -18,5 +27,3 @@
   </a>
 </p>
 
-<p>{{something}}</p>
-<p>{{bodyString}}</p>

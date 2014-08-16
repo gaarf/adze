@@ -6,7 +6,7 @@ app.directive('myClickyBtn', function(dateFilter, $popover) {
     restrict: 'A',
     templateUrl: 'clickyBtn/clickyBtn.tpl',
     scope: {
-      thing: '@myClickyBtn'
+      text: '@myClickyBtn'
     },
     link: function(scope, element, attrs) {
 
@@ -24,7 +24,7 @@ app.directive('myClickyBtn', function(dateFilter, $popover) {
         pop.toggle();
 
         scope.$apply(function(){
-          scope.thing = dateFilter(Date.now(), 'mediumTime');
+          scope.text = dateFilter(Date.now(), 'mediumTime');
         });
       }
 

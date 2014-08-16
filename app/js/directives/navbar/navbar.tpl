@@ -21,7 +21,7 @@
 
     <li class="dropdown">
       <a href="" class="dropdown-toggle">
-        Welcome {{foo}}! <span class="caret"></span>
+        {{something}} {{somebody.name}}! <span class="caret"></span>
       </a>
     </li>
 

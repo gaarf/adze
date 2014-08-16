@@ -43,7 +43,10 @@ angular
 
         .state('about', {
           url: '/about',
-          templateUrl: '/partials/about.html'
+          templateUrl: '/partials/about.html',
+          data: {
+            foo: 'Butters!'
+          }
         })
 
         .state('contact', {
@@ -54,18 +57,19 @@ angular
 
           .state('contact.modal', {
             url: '/modal',
+            data: {
+              foo: 'Cartman!'
+            },
             onEnter: function($state, $modal) {
               var m = $modal({
-                title: 'My Modal',
-                contentTemplate: '/partials/lipsum.html',
+                // contentTemplate is buggy
+                template: '/partials/modal.html',
                 show: false
               });
-
-              m.$scope.$on('modal.hide', function(){
-                $state.transitionTo('contact');
-              });
-
               m.$promise.then(function() {
+                m.$scope.$on('modal.hide', function(){
+                  $state.transitionTo('contact');
+                });
                 m.show();
               });
             }

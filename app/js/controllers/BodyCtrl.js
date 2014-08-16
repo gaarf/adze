@@ -7,14 +7,16 @@ app.controller('BodyCtrl', function ($scope, $log) {
     $log.log(it, 'logged from BodyCtrl');
   };
 
-  $scope.bodyString = 'I come from the BodyCtrl';
-
   $scope.bodyAlertObj = {
-    "title": "Holy guacamole!",
-    "content": "Best check yo self, you're not looking too good.",
+    "title": "Holy bodyAlertObj!",
+    "content": "lorem ipsum... Blah Blah Blah...",
     "type": "info"
   };
 
-  $scope.something = 'OMG where is Kenny?';
+  $scope.something =  '\'sup?';
+
+  $scope.somebody = {
+    name: 'Kenny'
+  };
 
 });

@@ -1,8 +1,8 @@
 <div class="page-header">
-  <h1>About</h1>
+  <h1>About {{something}}</h1>
 </div>
 
 <div ng-repeat="i in [1,2,3,4,5]">
-  <h3>Lipsum {{i}} FTW</h3>
-  <section ng-include="'/partials/lipsum.html'"></section>
+  <h5>Lipsum {{i}} {{something}}</h5>
+  <ng-include src="'/partials/lipsum.html'"></ng-include>
 </div>
