@@ -2,23 +2,44 @@
 
 /* jasmine specs for directives go here */
 
-describe('directives', function() {
-  beforeEach(module('adze'));
+describe('directive', function() {
+  var $compile, scope;
 
-  describe('clicky-btn', function() {
+  beforeEach(module('adze.directives'));
 
-    it('should be testable', function() {
+  beforeEach(inject(function(_$compile_, $rootScope){
+    $compile = _$compile_;
+    scope = $rootScope.$new();
+  }));
 
-      expect(true).toBe(true);
+  describe('myClickyBtn', function() {
 
-      // module(function($provide) {
-      //   $provide.value('version', 'TEST_VER');
-      // });
-      // inject(function($compile, $rootScope) {
-      //   var element = $compile('<span app-version></span>')($rootScope);
-      //   expect(element.text()).toEqual('TEST_VER');
-      // });
+    it('should get a btn class, and change color on click', function() {
+      var el = $compile('<span my-clicky-btn></span>')(scope);
+      scope.$digest();
+      expect(el.hasClass('btn')).toBe(true);
+      expect(el.hasClass('btn-success')).toBe(true);
+
+      el.triggerHandler('click');
+      expect(el.hasClass('btn-success')).toBe(false);
+      expect(el.hasClass('btn-danger')).toBe(true);
     });
 
+    it('should use the attr value', function() {
+      var el = $compile('<span my-clicky-btn="testString"></span>')(scope);
+      scope.$digest();
+      expect(el.isolateScope().text).toBe("testString");
+      expect(el.find('strong').text()).toBe("testString");
+
+      el.triggerHandler('click');
+      var text = el.isolateScope().text;
+      expect(text).not.toBe("testString");
+      expect(el.find('strong').text()).toBe(text);
+    });
+
+
   });
+
+
+
 });

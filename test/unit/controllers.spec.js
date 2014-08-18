@@ -1,6 +1,8 @@
 'use strict';
 
-describe('controllers', function(){
+describe('controller', function(){
+
+  beforeEach(module('adze.controllers'));
 
   it('test env is ready', function() {
     expect(jasmine).toBeDefined();
@@ -12,8 +14,6 @@ describe('controllers', function(){
 
   describe('BodyCtrl', function() {
     var $scope;
-
-    beforeEach(module('adze'));
 
     beforeEach(inject(function($rootScope, $controller) {
       $scope = $rootScope.$new();

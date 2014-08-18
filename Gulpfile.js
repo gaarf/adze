@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     plug = require('gulp-load-plugins')(),
-    pkg = require('./package.json');
+    pkg = require('./package.json'),
+    merge = require('merge-stream');
 
 gulp.task('css:lib', ['fonts'], function() {
   return gulp.src([
@@ -77,20 +78,28 @@ gulp.task('img', function() {
 
 
 gulp.task('tpl', function() {
-  return gulp.src([
-      // './app/partials/home.html',
+  return merge(
+
+    gulp.src([
       './app/js/directives/**/*.tpl'
     ])
-    .pipe(plug.size({showFiles:true}))
-    .pipe(plug.angularTemplatecache('tpl.js', {
-      module: pkg.name,
-      base: function(file) {
-        return file.path.replace(
-          0<file.base.indexOf('app/js/directives')
-          ? file.base : __dirname + '/app', ''
-        );
-      }
-    }))
+      .pipe(plug.size({showFiles:true}))
+      .pipe(plug.angularTemplatecache({
+        module: pkg.name + '.directives'
+      })),
+
+    gulp.src([
+      './app/partials/home.html'
+    ])
+      .pipe(plug.size({showFiles:true}))
+      .pipe(plug.angularTemplatecache({
+        module: pkg.name,
+        base: __dirname + '/app',
+        root: '/'
+      }))
+
+  )
+    .pipe(plug.concat('tpl.js'))
     .pipe(gulp.dest('./dist/bundle'));
 });
 

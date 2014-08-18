@@ -1,13 +1,22 @@
 angular
   .module('adze', [
-    'ngAnimate', 
-    'ngSanitize', 
-    'ui.router',
-    'mgcrea.ngStrap.tooltip',
-    'mgcrea.ngStrap.dropdown',
-    'mgcrea.ngStrap.modal',
-    'mgcrea.ngStrap.alert',
-    'mgcrea.ngStrap.popover'
+
+    angular
+      .module('adze.controllers', [
+      ]).name,
+
+    angular
+      .module('adze.directives', [
+        'mgcrea.ngStrap.tooltip',
+        'mgcrea.ngStrap.dropdown',
+        'mgcrea.ngStrap.modal',
+        'mgcrea.ngStrap.alert',
+        'mgcrea.ngStrap.popover'
+      ]).name,
+
+    'ngAnimate',
+    'ngSanitize',
+    'ui.router'
   ])
 
   .run(function ($rootScope, $state, $stateParams) {

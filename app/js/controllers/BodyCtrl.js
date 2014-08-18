@@ -1,4 +1,4 @@
-var app = angular.module('adze');
+var app = angular.module('adze.controllers');
 
 
 app.controller('BodyCtrl', function ($scope, $log) {

@@ -1,4 +1,4 @@
-var app = angular.module('adze');
+var app = angular.module('adze.directives');
 
 app.directive('myNavbar', function($dropdown, $alert) {
   return {
