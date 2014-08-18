@@ -5,23 +5,26 @@
   "version": "0.0.0",
   "description": "gulp less bootstrap angular",
   "main": "index.js",
+
   "scripts": {
+
     "postinstall": "bower install",
 
     "prestart": "npm install",
     "start": "gulp watch & http-server ./dist -p 8080",
 
     "pretest": "npm install",
-    "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
-    "test-single-run": "./node_modules/karma/bin/karma start test/karma.conf.js --no-auto-watch --single-run",
+    "test": "gulp build && ./node_modules/karma/bin/karma start test/karma.conf.js",
+    "test-single-run": "gulp build && ./node_modules/karma/bin/karma start test/karma.conf.js --no-auto-watch --single-run",
 
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
 
     "preprotractor": "http-server -p 9090 ./dist & npm run update-webdriver",
-    "protractor": "protractor test/protractor-conf.js",
+    "protractor": "gulp build && protractor test/protractor-conf.js",
     "postprotractor": "pkill -fn \"http-server -p 9090\" && true"
   },
+
   "devDependencies": {
     "gulp": "^3.8.7",
     "gulp-angular-templatecache": "^1.3.0",
