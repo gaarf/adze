@@ -1,6 +1,8 @@
 <div class="page-header">
-  <h1>About {{something}}</h1>
+  <h1>About {{$stateParams.foo || something}}</h1>
 </div>
+
+<pre>{{$stateParams}}</pre>
 
 <div ng-repeat="i in [1,2,3,4,5]">
   <h5>Lipsum {{i}} {{something}}</h5>

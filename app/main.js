@@ -26,7 +26,7 @@ angular
       /////////////////////////////
 
       $urlRouterProvider
-        .when('/foo/:bar', '/about?bar')
+        .when('/foo/:foo', '/about/:foo')
         .otherwise('/');
 
 
@@ -48,6 +48,10 @@ angular
             foo: 'Butters!'
           }
         })
+
+          .state('about.foo', {
+            url: '/:foo'
+          })
 
         .state('contact', {
           url: '/contact',
