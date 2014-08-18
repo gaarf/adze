@@ -6,9 +6,16 @@
   "description": "gulp less bootstrap angular",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "bower install",
-    "start": "gulp watch & ./node_modules/.bin/http-server ./dist"
+    "prestart": "npm install",
+    "start": "gulp watch & ./node_modules/.bin/http-server ./dist",
+    "pretest": "npm install",
+    "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
+    "test-single-run": "gulp build && ./node_modules/karma/bin/karma start test/karma.conf.js  --single-run",
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor test/protractor-conf.js"
   },
   "devDependencies": {
     "gulp": "^3.8.7",
@@ -25,6 +32,10 @@
     "gulp-size": "^1.0.0",
     "gulp-uglify": "^0.3.1",
     "gulp-wrapper": "^0.1.5",
-    "http-server": "^0.6.1"
+    "http-server": "^0.6.1",
+    "karma": "^0.12.21",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-jasmine": "^0.1.5",
+    "protractor": "^1.0.0"
   }
 }
