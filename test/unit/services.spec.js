@@ -5,10 +5,10 @@ describe('service', function() {
   beforeEach(module('adze.services'));
 
   describe('Chuck Norris', function() {
-    var req, res, $httpBackend;
+    var resource, result, $httpBackend;
 
     beforeEach(inject(function($injector) {
-      req = $injector.get('MyChuckNorrisRequest');
+      resource = $injector.get('myChuckNorrisAPI');
 
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.whenJSONP(/.*/).respond({value:{joke:'haha!'}});
@@ -21,24 +21,24 @@ describe('service', function() {
     });
 
     it('can tell a joke', function() {
-      res = req.getJoke();
+      result = resource.getJoke();
       $httpBackend.flush();
-      expect(res.joke).toBe('haha!');
+      expect(result.joke).toBe('haha!');
     });
 
     it('can tell a joke (jasmine async style)', function() {
       runs(function() {
-        res = req.getJoke();
+        result = resource.getJoke();
         setTimeout($httpBackend.flush, 200);
       });
       waitsFor(function() {
-          return res.$resolved;
+          return result.$resolved;
         },
         "The joke promise should be resolved",
         1000
       );
       runs(function() {
-        expect(res.joke).toBe('haha!');
+        expect(result.joke).toBe('haha!');
       });
     });
 
