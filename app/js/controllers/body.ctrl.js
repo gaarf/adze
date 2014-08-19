@@ -3,9 +3,7 @@ var module = angular.module('adze.controllers');
 
 module.controller('BodyCtrl', function ($scope, $log) {
 
-  $scope.bodyLogger = function (it) {
-    $log.log(it, 'logged from BodyCtrl');
-  };
+  $log.log('hello from BodyCtrl');
 
   $scope.bodyAlertObj = {
     "title": "Holy bodyAlertObj!",

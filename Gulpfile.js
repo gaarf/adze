@@ -153,7 +153,7 @@ gulp.task('watch', ['build'], function() {
 
   gulp.watch('./app/**/*.js', ['js:app']);
   gulp.watch('./app/**/*.{less,css}', ['css:app']);
-  gulp.watch('./app/js/directives/**/*.tpl', ['tpl']);
+  gulp.watch(['./app/js/directives/**/*.tpl', './app/partials/home.html'], ['tpl']);
   gulp.watch('./app/**/*.html', ['html']);
   gulp.watch('./app/img/**/*', ['img']);
 
