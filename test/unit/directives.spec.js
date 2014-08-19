@@ -1,7 +1,5 @@
 'use strict';
 
-/* jasmine specs for directives go here */
-
 describe('directive', function() {
   var $compile, scope;
 
