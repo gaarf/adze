@@ -34,7 +34,7 @@ describe('adze', function() {
       expect( element(by.css('header .dropdown-menu')).isDisplayed() )
         .toBe(true);
 
-      var link = element(by.partialLinkText('Contact/modal'));
+      var link = element(by.partialLinkText('Goto contact\'s modal'));
       expect( link.getAttribute('href') )
         .toMatch("/#/contact/modal");
 

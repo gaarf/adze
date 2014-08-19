@@ -3,6 +3,13 @@ var gulp = require('gulp'),
     pkg = require('./package.json'),
     merge = require('merge-stream');
 
+function plumber() {
+  return plug.plumber({ errorHandler: function (err) {  
+    plug.util.beep();
+    plug.util.log(plug.util.colors.red(err.toString()));
+  } });
+}
+
 gulp.task('css:lib', ['fonts'], function() {
   return gulp.src([
       './bower_components/angular/angular-csp.css',
@@ -10,7 +17,6 @@ gulp.task('css:lib', ['fonts'], function() {
       './bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
       './bower_components/angular-motion/dist/angular-motion.min.css'
     ])
-    .pipe(plug.size({showFiles:true}))
     .pipe(plug.concat('lib.css'))
     .pipe(gulp.dest('./dist/bundle'));
 });
@@ -25,7 +31,7 @@ gulp.task('css:app', function() {
       './app/js/directives/**/*.{less,css}',
       './app/css/style.less'
     ])
-    .pipe(plug.size({showFiles:true}))
+    .pipe(plumber())
     .pipe(plug.if('*.less', plug.less()))
     .pipe(plug.concat('app.css'))
     .pipe(plug.autoprefixer(["> 1%"], {cascade:true}))
@@ -51,7 +57,6 @@ gulp.task('js:lib', function() {
       './bower_components/angular-strap/dist/modules/popover.{js,tpl.js}'
 
     ])
-    .pipe(plug.size({showFiles:true}))
     .pipe(plug.concat('lib.js'))
     .pipe(gulp.dest('./dist/bundle'));
 });
@@ -59,7 +64,7 @@ gulp.task('js:lib', function() {
 
 gulp.task('js:app', function() {
   return gulp.src('./app/**/*.js')
-    .pipe(plug.size({showFiles:true}))
+    .pipe(plumber())
     .pipe(plug.ngAnnotate())
     .pipe(plug.wrapper({
        header: '\n(function(/* ${filename} */){\n',
@@ -73,7 +78,6 @@ gulp.task('js:app', function() {
 
 gulp.task('img', function() {
   return gulp.src('./app/img/*')
-    .pipe(plug.size({showFiles:true}))
     .pipe(gulp.dest('./dist/img'));
 });
 
@@ -84,7 +88,7 @@ gulp.task('tpl', function() {
     gulp.src([
       './app/js/directives/**/*.tpl'
     ])
-      .pipe(plug.size({showFiles:true}))
+
       .pipe(plug.angularTemplatecache({
         module: pkg.name + '.directives'
       })),
@@ -92,7 +96,7 @@ gulp.task('tpl', function() {
     gulp.src([
       './app/partials/home.html'
     ])
-      .pipe(plug.size({showFiles:true}))
+
       .pipe(plug.angularTemplatecache({
         module: pkg.name,
         base: __dirname + '/app',
@@ -107,7 +111,6 @@ gulp.task('tpl', function() {
 
 gulp.task('html', function() {
   return gulp.src('./app/**/*.html')
-    .pipe(plug.size({showFiles:true}))
     .pipe(gulp.dest('./dist'));
 });
 

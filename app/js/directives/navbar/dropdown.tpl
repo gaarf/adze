@@ -14,7 +14,7 @@
   <li role="presentation">
     <a role="menuitem" tabindex="-1" ui-sref="contact.modal">
       <i class="glyphicon glyphicon-paperclip"></i>
-      Contact/modal
+      Goto contact's modal
     </a>
   </li>
   <li role="presentation">
