@@ -1,6 +1,6 @@
-var app = angular.module('adze.directives');
+var module = angular.module('adze.directives');
 
-app.directive('myNavbar', function($dropdown, $alert) {
+module.directive('myNavbar', function($dropdown, $alert) {
   return {
     restrict: 'A',
     templateUrl: 'navbar/navbar.tpl',

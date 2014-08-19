@@ -1,7 +1,7 @@
-var app = angular.module('adze.directives');
+var module = angular.module('adze.directives');
 
 
-app.directive('myClickyBtn', function(dateFilter, $popover) {
+module.directive('myClickyBtn', function(dateFilter, $popover) {
   return {
     restrict: 'A',
     templateUrl: 'clickyBtn/clickyBtn.tpl',

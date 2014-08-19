@@ -39,6 +39,7 @@ gulp.task('js:lib', function() {
 
       './bower_components/angular-sanitize/angular-sanitize.js',
       './bower_components/angular-animate/angular-animate.js',
+      './bower_components/angular-resource/angular-resource.js',
 
       './bower_components/angular-ui-router/release/angular-ui-router.js',
 
@@ -131,6 +132,8 @@ gulp.task('js:minify', ['js'], function() {
     .pipe(gulp.dest('./dist/bundle'))
     .pipe(plug.size({showFiles:true, gzip:true, total:false}));
 });
+
+gulp.task('minify', ['js:minify']);
 
 gulp.task('lib', ['js:lib', 'css:lib']);
 gulp.task('app', ['js:app', 'css:app']);

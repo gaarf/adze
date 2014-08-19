@@ -1,7 +1,7 @@
-var app = angular.module('adze.controllers');
+var module = angular.module('adze.controllers');
 
 
-app.controller('ContactCtrl', function ($scope) {
+module.controller('ContactCtrl', function ($scope) {
 
   $scope.something = 'whatever';
 

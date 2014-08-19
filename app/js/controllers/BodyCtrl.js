@@ -1,7 +1,7 @@
-var app = angular.module('adze.controllers');
+var module = angular.module('adze.controllers');
 
 
-app.controller('BodyCtrl', function ($scope, $log) {
+module.controller('BodyCtrl', function ($scope, $log) {
 
   $scope.bodyLogger = function (it) {
     $log.log(it, 'logged from BodyCtrl');

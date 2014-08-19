@@ -2,7 +2,8 @@ angular
   .module('adze', [
 
     angular
-      .module('adze.controllers', [
+      .module('adze.services', [
+        'ngResource'
       ]).name,
 
     angular
@@ -12,6 +13,14 @@ angular
         'mgcrea.ngStrap.modal',
         'mgcrea.ngStrap.alert',
         'mgcrea.ngStrap.popover'
+      ]).name,
+
+    angular
+      .module('adze.controllers', [
+      ]).name,
+
+    angular
+      .module('adze.filters', [
       ]).name,
 
     'ngAnimate',
