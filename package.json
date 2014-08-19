@@ -21,7 +21,7 @@
     "update-webdriver": "webdriver-manager update",
 
     "preprotractor": "http-server -p 9090 ./dist & npm run update-webdriver",
-    "protractor": "gulp build && protractor test/protractor-conf.js",
+    "protractor": "gulp build && protractor test/protractor-conf.js || true",
     "postprotractor": "pkill -fn \"http-server -p 9090\" && true"
   },
 
