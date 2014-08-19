@@ -4,14 +4,14 @@ var module = angular.module('adze.directives');
 module.directive('myClickyBtn', function(dateFilter, $popover) {
   return {
     restrict: 'A',
-    templateUrl: 'clickyBtn/clickyBtn.tpl',
+    templateUrl: 'clicky-btn/clicky-btn.tpl',
     scope: {
       text: '@myClickyBtn'
     },
     link: function(scope, element, attrs) {
 
       var pop = $popover(element, {
-        title: 'clickyBtn',
+        title: 'clicky button',
         content: 'you should totally click this',
         placement: 'top',
         trigger: 'hover',

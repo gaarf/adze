@@ -4,13 +4,13 @@ describe('service', function() {
 
   beforeEach(module('adze.services'));
 
-  describe('ChuckNorris', function() {
-    var ChuckNorris, $httpBackend;
+  describe('Chuck Norris', function() {
+    var req, res, $httpBackend;
 
     beforeEach(inject(function($injector) {
-      ChuckNorris = $injector.get('ChuckNorris');
-      $httpBackend = $injector.get('$httpBackend');
+      req = $injector.get('MyChuckNorrisRequest');
 
+      $httpBackend = $injector.get('$httpBackend');
       $httpBackend.whenJSONP(/.*/).respond({value:{joke:'haha!'}});
       $httpBackend.expectJSONP(/.*/);
     }));
@@ -20,32 +20,28 @@ describe('service', function() {
       $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('can tell a joke (jasmine async)', function() {
-      var joke;
+    it('can tell a joke', function() {
+      res = req.getJoke();
+      $httpBackend.flush();
+      expect(res.joke).toBe('haha!');
+    });
 
+    it('can tell a joke (jasmine async style)', function() {
       runs(function() {
-        joke = ChuckNorris.getJoke();
-        $httpBackend.flush();
+        res = req.getJoke();
+        setTimeout($httpBackend.flush, 200);
       });
-
       waitsFor(function() {
-          return joke.$resolved;
+          return res.$resolved;
         },
         "The joke promise should be resolved",
-        2000
+        1000
       );
-
       runs(function() {
-        expect(joke.joke).toBe('haha!');
+        expect(res.joke).toBe('haha!');
       });
-
     });
 
-    it('can tell a joke (short and sweet)', function() {
-      var joke = ChuckNorris.getJoke();
-      $httpBackend.flush();
-      expect(joke.joke).toBe('haha!');
-    });
 
   }); 
 

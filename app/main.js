@@ -7,20 +7,25 @@ angular
       ]).name,
 
     angular
+      .module('adze.filters', [
+        'adze.services'
+      ]).name,
+
+    angular
+      .module('adze.controllers', [
+        'adze.services',
+        'adze.filters'
+      ]).name,
+
+    angular
       .module('adze.directives', [
+        'adze.services',
+        'adze.filters',
         'mgcrea.ngStrap.tooltip',
         'mgcrea.ngStrap.dropdown',
         'mgcrea.ngStrap.modal',
         'mgcrea.ngStrap.alert',
         'mgcrea.ngStrap.popover'
-      ]).name,
-
-    angular
-      .module('adze.controllers', [
-      ]).name,
-
-    angular
-      .module('adze.filters', [
       ]).name,
 
     'ngAnimate',
