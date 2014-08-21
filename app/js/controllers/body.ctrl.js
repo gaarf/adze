@@ -1,4 +1,4 @@
-var module = angular.module('adze.controllers');
+var module = angular.module(PKG.name+'.controllers');
 
 
 module.controller('BodyCtrl', function ($scope, $log) {

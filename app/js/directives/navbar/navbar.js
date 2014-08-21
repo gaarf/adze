@@ -1,4 +1,4 @@
-var module = angular.module('adze.directives');
+var module = angular.module(PKG.name+'.directives');
 
 module.directive('myNavbar', function($dropdown, $alert) {
   return {

@@ -63,12 +63,16 @@ gulp.task('js:lib', function() {
 
 
 gulp.task('js:app', function() {
+  var PKG = JSON.stringify({
+    name: pkg.name,
+    version: pkg.version
+  });
   return gulp.src('./app/**/*.js')
     .pipe(plumber())
     .pipe(plug.ngAnnotate())
     .pipe(plug.wrapper({
-       header: '\n(function(/* ${filename} */){\n',
-       footer: '\n})();\n'
+       header: '\n(function (PKG){ /* ${filename} */\n',
+       footer: '\n})('+PKG+');\n'
     }))
     .pipe(plug.concat('app.js'))
     .pipe(gulp.dest('./dist/bundle'));

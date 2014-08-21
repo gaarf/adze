@@ -1,4 +1,4 @@
-var module = angular.module('adze.services');
+var module = angular.module(PKG.name+'.services');
 
 
 module.factory('myChuckNorrisAPI', function($resource){

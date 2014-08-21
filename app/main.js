@@ -1,26 +1,26 @@
 angular
-  .module('adze', [
+  .module(PKG.name, [
 
     angular
-      .module('adze.services', [
+      .module(PKG.name+'.services', [
         'ngResource'
       ]).name,
 
     angular
-      .module('adze.filters', [
-        'adze.services'
+      .module(PKG.name+'.filters', [
+        PKG.name+'.services'
       ]).name,
 
     angular
-      .module('adze.controllers', [
-        'adze.services',
-        'adze.filters'
+      .module(PKG.name+'.controllers', [
+        PKG.name+'.services',
+        PKG.name+'.filters'
       ]).name,
 
     angular
-      .module('adze.directives', [
-        'adze.services',
-        'adze.filters',
+      .module(PKG.name+'.directives', [
+        PKG.name+'.services',
+        PKG.name+'.filters',
         'mgcrea.ngStrap.tooltip',
         'mgcrea.ngStrap.dropdown',
         'mgcrea.ngStrap.modal',
@@ -40,69 +40,6 @@ angular
     // to active whenever 'contacts.list' or one of its decendents is active.
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-  })
-
-  .config(function ($stateProvider, $urlRouterProvider) {
-
-      /////////////////////////////
-      // Redirects and Otherwise //
-      /////////////////////////////
-
-      $urlRouterProvider
-        .when('/foo/:foo', '/about/:foo')
-        .otherwise('/');
-
-
-      //////////////////////////
-      // State Configurations //
-      //////////////////////////
-
-      $stateProvider
-
-        .state("home", {
-          url: "/",
-          templateUrl: '/partials/home.html'
-        })
-
-        .state('about', {
-          url: '/about',
-          templateUrl: '/partials/about.html',
-          data: {
-            foo: 'Butters!'
-          }
-        })
-
-          .state('about.foo', {
-            url: '/:foo'
-          })
-
-        .state('contact', {
-          url: '/contact',
-          templateUrl: '/partials/contact.html',
-          controller: 'ContactCtrl'
-        })
-
-          .state('contact.modal', {
-            url: '/modal',
-            data: {
-              foo: 'Cartman!'
-            },
-            onEnter: function($state, $modal) {
-              var m = $modal({
-                // contentTemplate is buggy
-                template: '/partials/modal.html',
-                show: false
-              });
-              m.$promise.then(function() {
-                m.$scope.$on('modal.hide', function(){
-                  $state.transitionTo('contact');
-                });
-                m.show();
-              });
-            }
-          })
-
-        ;
   })
 
   .config(function ($alertProvider) {

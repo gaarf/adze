@@ -1,4 +1,4 @@
-var module = angular.module('adze.filters');
+var module = angular.module(PKG.name+'.filters');
 
 
 
