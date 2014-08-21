@@ -5,7 +5,7 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a class="navbar-brand" href="/">Adze</a>
+  <a class="navbar-brand" href="/">{{title}}</a>
 </div>
 <div class="collapse navbar-collapse" ng-class="{in:navbarCollapsed}">
   <ul class="nav navbar-nav">

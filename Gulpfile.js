@@ -65,7 +65,7 @@ gulp.task('js:lib', function() {
 gulp.task('js:app', function() {
   var PKG = JSON.stringify({
     name: pkg.name,
-    version: pkg.version
+    v: pkg.version
   });
   return gulp.src('./app/**/*.js')
     .pipe(plumber())
@@ -125,6 +125,8 @@ gulp.task('lint', function() {
     .pipe(plug.jshint.reporter())
     .pipe(plug.jshint.reporter('fail'));
 });
+gulp.task('jshint', ['lint']);
+gulp.task('hint', ['lint']);
 
 
 gulp.task('clean', function() {

@@ -5,9 +5,9 @@ module.directive('myNavbar', function($dropdown, $alert) {
     restrict: 'A',
     templateUrl: 'navbar/navbar.tpl',
 
-    // scope: {},
-
     link: function(scope, element, attrs) {
+
+      scope.title = PKG.name + "@" + PKG.v;
 
       scope.navbarAlert = function(type, content) {
         $alert({title:'from navbar', content:content, type:type});
