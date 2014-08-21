@@ -1,9 +1,9 @@
 {
-  "name": "adze",
+  "name": "coopr-ngui",
   "author": "adrien@continuuity.com",
   "license": "ISC",
-  "version": "0.0.0",
-  "description": "gulp less bootstrap angular",
+  "version": "0.0.1",
+  "description": "Front-end for Coopr",
   "main": "index.js",
   "scripts": {
     "postinstall": "bower install",
@@ -11,7 +11,7 @@
     "start": "gulp watch & http-server ./dist -p 8080",
     "pretest": "npm install",
     "test": "gulp build && ./node_modules/karma/bin/karma start test/karma.conf.js",
-    "test-single-run": "gulp build && ./node_modules/karma/bin/karma start test/karma.conf.js --no-auto-watch --single-run",
+    "test-single-run": "./node_modules/karma/bin/karma start test/karma.conf.js --no-auto-watch --single-run",
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "http-server -p 9090 ./dist & npm run update-webdriver",
