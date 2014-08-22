@@ -152,7 +152,7 @@ gulp.task('style', ['css']);
 
 gulp.task('build', ['js', 'css', 'img', 'tpl', 'html']);
 
-gulp.task('default', ['lint', 'build', 'js:minify']);
+gulp.task('default', ['lint', 'build']);
 
 gulp.task('watch', ['build'], function() {
   plug.livereload.listen();

@@ -4,18 +4,16 @@
   "license": "ISC",
   "version": "0.0.1",
   "description": "Front-end for Coopr",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "postinstall": "bower install",
-    "prestart": "npm install",
-    "start": "gulp watch & http-server ./dist -p 8080",
-    "pretest": "npm install",
-    "test": "gulp build && ./node_modules/karma/bin/karma start test/karma.conf.js",
-    "test-single-run": "./node_modules/karma/bin/karma start test/karma.conf.js --no-auto-watch --single-run",
-    "preupdate-webdriver": "npm install",
+    "start": "node ./server.js",
+    "pretest": "npm install && bower install && gulp lint build",
+    "test": "./node_modules/karma/bin/karma start test/karma.conf.js",
+    "test-single-run": "npm run pretest && ./node_modules/karma/bin/karma start test/karma.conf.js --no-auto-watch --single-run",
+    "preupdate-webdriver": "npm run pretest",
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "http-server -p 9090 ./dist & npm run update-webdriver",
-    "protractor": "gulp build && protractor test/protractor-conf.js || true",
+    "protractor": "protractor test/protractor-conf.js || true",
     "postprotractor": "pkill -fn \"http-server -p 9090\" && true"
   },
   "devDependencies": {
@@ -35,11 +33,14 @@
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
     "gulp-wrapper": "^0.1.5",
-    "http-server": "^0.6.1",
     "karma": "^0.12.21",
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
     "merge-stream": "^0.1.5",
     "protractor": "^1.0.0"
+  },
+  "dependencies": {
+    "cors-anywhere": "^0.1.9",
+    "http-server": "^0.6.1"
   }
 }
