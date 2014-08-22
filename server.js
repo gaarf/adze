@@ -1,3 +1,5 @@
+var port = process.env.COOPR_UI_PORT || 8080;
+
 require('http-server')
   .createServer({
     root: __dirname + '/dist',
@@ -6,8 +8,8 @@ require('http-server')
       console.log('%s %s', req.method, req.url);
     }
   })
-  .listen(8080, '0.0.0.0', function () {
-    console.log('[http-server] listening on port 8080');
+  .listen(port, '0.0.0.0', function () {
+    console.log('[http-server] listening on port %s', port);
   });
 
 

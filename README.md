@@ -11,9 +11,11 @@ and then, each in their own tab:
 `npm start` (http-server + cors-anywhere)
 `npm test` (run karma for unit tests)
 
-UI runs on port `8080`
-corsproxy runs on port `8081`
-loom server API is expected to be on port `55054`
+`open http://localhost:8080`
+
+* in dev mode, UI runs on port `8080` and connects to livereload on port `35729`
+* cors-anywhere always runs on port `8081`
+* loom server is expected to be running on port `55054`
 
 ### for testing:
 
@@ -30,4 +32,4 @@ first make a clean build into `./dist` folder:
 
 then to run the server, possibly on a different host:
 `npm install --production`
-`npm start` (http-server + cors-anywhere)
+`COOPR_UI_PORT=8100 npm start` (http-server + cors-anywhere)
