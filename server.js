@@ -22,7 +22,7 @@ require('http-server')
 
 require('cors-anywhere')
   .createServer({
-    requireHeader: [],
+    requireHeader: ['x-requested-with'],
     removeHeaders: ['cookie', 'cookie2']
   })
   .listen(8081, '0.0.0.0', function() {
