@@ -11,19 +11,19 @@ describe('controller', function(){
     expect(inject).toBe(angular.mock.inject);
   });
 
-  // describe('BodyCtrl', function() {
-  //   var $scope;
+  describe('LoginCtrl', function() {
+    var $scope;
 
-  //   beforeEach(inject(function($rootScope, $controller) {
-  //     $scope = $rootScope.$new();
-  //     $controller('BodyCtrl', {$scope: $scope});
-  //   }));
+    beforeEach(inject(function($rootScope, $controller) {
+      $scope = $rootScope.$new();
+      $controller('LoginCtrl', {$scope: $scope});
+    }));
 
-  //   it('should init somebody', function() {
-  //     expect($scope.somebody.name).toBe('Kenny');
-  //   });
+    it('should init credentials', function() {
+      expect($scope.credentials).toBeDefined();
+    });
 
-  // });
+  });
 
 
 });

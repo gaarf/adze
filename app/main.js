@@ -15,7 +15,9 @@ angular
     angular
       .module(PKG.name+'.controllers', [
         PKG.name+'.services',
-        PKG.name+'.filters'
+        PKG.name+'.filters',
+        'mgcrea.ngStrap.alert',
+        'ui.router'
       ]).name,
 
     angular

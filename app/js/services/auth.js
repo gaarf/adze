@@ -8,7 +8,7 @@ module.constant('MYAUTH_EVENT', {
   loginSuccess: 'auth-login-success',
   loginFailed: 'auth-login-failed',
   logoutSuccess: 'auth-logout-success',
-  sessionTimeout: 'auth-session-timeout', // TODO
+  sessionTimeout: 'auth-session-timeout',
   notAuthenticated: 'auth-not-authenticated',
   notAuthorized: 'auth-not-authorized'
 });
@@ -20,7 +20,7 @@ module.constant('MYAUTH_ROLE', {
   admin: 'admin'
 });
 
-module.run(function ($rootScope, $alert, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
+module.run(function ($rootScope, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
   $rootScope.currentUser = myAuth.currentUser;
 
   $rootScope.$on('$stateChangeStart', function (event, next) {
@@ -40,7 +40,7 @@ module.run(function ($rootScope, $alert, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
 });
 
 
-module.service('myAuth', function (MYAUTH_EVENT, MyAuthUser, $rootScope, $localStorage, $sessionStorage) {
+module.service('myAuth', function (MYAUTH_EVENT, MyAuthUser, $rootScope, $sessionStorage) {
 
   this.currentUser = MyAuthUser.revive($sessionStorage.currentUser);
 
@@ -118,6 +118,7 @@ module.factory('MyAuthUser', function (MYAUTH_ROLE) {
       user.role = data.role;
       return user;
     }
+    else return null;
   };
 
   /**
@@ -129,7 +130,6 @@ module.factory('MyAuthUser', function (MYAUTH_ROLE) {
     if(this.role === MYAUTH_ROLE.superadmin) {
       return true;
     }
-
     if (!angular.isArray(authorizedRoles)) {
       authorizedRoles = [authorizedRoles];
     }
