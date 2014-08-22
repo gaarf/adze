@@ -1,1 +1,0 @@
-clicky <strong>{{text}}</strong>

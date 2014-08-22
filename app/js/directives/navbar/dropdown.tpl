@@ -1,26 +1,12 @@
 <ul class="dropdown-menu dropdown-menu-right" role="menu" style="left:auto">
-  <li role="presentation" class="dropdown-header">alerts</li>
-  <li role="presentation">
-    <a role="menuitem" tabindex="-1" href="" ng-click="navbarAlert('warning', something)">
-      Warn {{something}}
+  <li role="presentation" ng-hide="currentUser">
+    <a role="menuitem" tabindex="-1" href="" ui-sref="login">
+      log in
     </a>
   </li>
-  <li role="presentation">
-    <a role="menuitem" tabindex="-1" href="" ng-click="navbarAlert('info', something)">
-      Info {{something}}
-    </a>
-  </li>
-  <li role="presentation" class="divider"></li>
-  <li role="presentation">
-    <a role="menuitem" tabindex="-1" ui-sref="contact.modal">
-      <i class="glyphicon glyphicon-paperclip"></i>
-      Goto contact's modal
-    </a>
-  </li>
-  <li role="presentation">
-    <a role="menuitem" tabindex="-1" href="">
-      <i class="glyphicon glyphicon-glass"></i>
-      Yay! {{somebody.name}}
+  <li role="presentation" ng-show="currentUser">
+    <a role="menuitem" tabindex="-1" href="" ng-click="logout()">
+      log out
     </a>
   </li>
 </ul>

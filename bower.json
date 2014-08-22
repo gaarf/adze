@@ -8,6 +8,7 @@
     "angular-sanitize": "~1.2.22",
     "angular-ui-router": "~0.2.10",
     "angular-mocks": "~1.2.22",
-    "angular-resource": "~1.2.22"
+    "angular-resource": "~1.2.22",
+    "ngstorage": "~0.3.0"
   }
 }

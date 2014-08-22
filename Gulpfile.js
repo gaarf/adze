@@ -54,7 +54,9 @@ gulp.task('js:lib', function() {
       './bower_components/angular-strap/dist/modules/dropdown.{js,tpl.js}',
       './bower_components/angular-strap/dist/modules/modal.{js,tpl.js}',
       './bower_components/angular-strap/dist/modules/alert.{js,tpl.js}',
-      './bower_components/angular-strap/dist/modules/popover.{js,tpl.js}'
+      './bower_components/angular-strap/dist/modules/popover.{js,tpl.js}',
+
+      './bower_components/ngstorage/ngStorage.js'
 
     ])
     .pipe(plug.concat('lib.js'))

@@ -1,12 +1,12 @@
 angular.module(PKG.name)
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, MYAUTH_ROLE) {
 
     /////////////////////////////
     // Redirects and Otherwise //
     /////////////////////////////
 
     $urlRouterProvider
-      .when('/foo/:foo', '/about/:foo')
+      .when('/signin', '/login')
       .otherwise('/');
 
 
@@ -21,43 +21,40 @@ angular.module(PKG.name)
         templateUrl: '/partials/home.html'
       })
 
-      .state('about', {
-        url: '/about',
-        templateUrl: '/partials/about.html',
+      .state("login", {
+        url: "/login",
+        templateUrl: '/partials/login.html',
+        controller: "LoginCtrl"
+      })
+
+      .state("hello", {
+        url: "/hello",
+        templateUrl: '/partials/hello.html',
         data: {
-          foo: 'Butters!'
+          authorizedRoles: MYAUTH_ROLE.all
         }
       })
 
-        .state('about.foo', {
-          url: '/:foo'
-        })
-
-      .state('contact', {
-        url: '/contact',
-        templateUrl: '/partials/contact.html',
-        controller: 'ContactCtrl'
+      .state("admin", {
+        url: "/admin",
+        templateUrl: '/partials/admin.html',
+        data: {
+          authorizedRoles: MYAUTH_ROLE.admin
+        }
       })
 
-        .state('contact.modal', {
-          url: '/modal',
-          data: {
-            foo: 'Cartman!'
-          },
-          onEnter: function($state, $modal) {
-            var m = $modal({
-              // contentTemplate is buggy
-              template: '/partials/modal.html',
-              show: false
-            });
-            m.$promise.then(function() {
-              m.$scope.$on('modal.hide', function(){
-                $state.transitionTo('contact');
-              });
-              m.show();
-            });
-          }
-        })
-
       ;
-  });
+  })
+  .run(function ($rootScope, $state, $alert, MYAUTH_EVENT) {
+
+    angular.forEach(MYAUTH_EVENT, function (v, k) {
+      $rootScope.$on(v, function onAuthEvent (event) {
+        $state.go('home');
+        console.log(event);
+        $alert({content:event.name, type:'info', duration:5});
+      });
+    });
+
+  })
+
+  ;

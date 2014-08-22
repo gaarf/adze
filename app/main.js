@@ -3,7 +3,8 @@ angular
 
     angular
       .module(PKG.name+'.services', [
-        'ngResource'
+        'ngResource',
+        'ngStorage'
       ]).name,
 
     angular

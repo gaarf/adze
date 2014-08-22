@@ -11,10 +11,4 @@ module.controller('BodyCtrl', function ($scope, $log) {
     "type": "info"
   };
 
-  $scope.something =  '\'sup?';
-
-  $scope.somebody = {
-    name: 'Kenny'
-  };
-
 });

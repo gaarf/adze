@@ -2,20 +2,7 @@
   <h1>Hello World</h1>
 </div>
 
-<form class="form-inline" role="form">
-  <div class="input-group input-group-lg">
-    <span class="input-group-addon">{{something}}</span>
-    <input type="text" class="form-control" ng-model="somebody.name">
-  </div>
-</form>
-
-<hr>
-
 <p>
-  <button my-clicky-btn="hello">A button</button>
-
-  and
-
   <a href="" bs-alert="bodyAlertObj">
     <span data-title="click to trigger an alert" data-placement="right" bs-tooltip>
       this is a link
@@ -23,6 +10,7 @@
   </a>
 </p>
 
-<hr>
+<p ng-hide="currentUser">you are logged out</p>
 
-<blockquote ng-bind-html="something | myChuckify"></blockquote>
+<p ng-show="currentUser">you are logged in {{currentUser}}</p>
+
