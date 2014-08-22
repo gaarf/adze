@@ -1,8 +1,8 @@
 'use strict';
 
 describe('controller', function(){
+  beforeEach(module('coopr-ngui.controllers'));
 
-  beforeEach(module('adze.controllers'));
 
   it('test env is ready', function() {
     expect(jasmine).toBeDefined();
@@ -11,23 +11,19 @@ describe('controller', function(){
     expect(inject).toBe(angular.mock.inject);
   });
 
+  // describe('BodyCtrl', function() {
+  //   var $scope;
 
-  describe('BodyCtrl', function() {
-    var $scope;
+  //   beforeEach(inject(function($rootScope, $controller) {
+  //     $scope = $rootScope.$new();
+  //     $controller('BodyCtrl', {$scope: $scope});
+  //   }));
 
-    beforeEach(inject(function($rootScope, $controller) {
-      $scope = $rootScope.$new();
-      $controller('BodyCtrl', {$scope: $scope});
-    }));
+  //   it('should init somebody', function() {
+  //     expect($scope.somebody.name).toBe('Kenny');
+  //   });
 
-    it('should init somebody', function() {
-      expect($scope.somebody.name).toBe('Kenny');
-    });
-
-    it('should have a bodyAlertObj', function() {
-      expect($scope.bodyAlertObj.type).not.toBeUndefined();
-    });
-  });
+  // });
 
 
 });
