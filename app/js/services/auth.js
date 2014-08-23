@@ -40,7 +40,7 @@ module.run(function ($rootScope, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
 });
 
 
-module.service('myAuth', function (MYAUTH_EVENT, MyAuthUser, $rootScope, $sessionStorage) {
+module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, $rootScope, $sessionStorage, $q) {
 
   this.currentUser = MyAuthUser.revive($sessionStorage.currentUser);
 
@@ -55,13 +55,21 @@ module.service('myAuth', function (MYAUTH_EVENT, MyAuthUser, $rootScope, $sessio
    * @param {object} c credentials
    */
   this.login = function (c) {
+    var deferred = $q.defer();
+
     if(c.username && c.password) {
       persist( new MyAuthUser(c) );
-      $rootScope.$broadcast(MYAUTH_EVENT.loginSuccess);
+      deferred.resolve(MYAUTH_EVENT.loginSuccess);
     }
     else {
-      $rootScope.$broadcast(MYAUTH_EVENT.loginFailed);
+      deferred.reject(MYAUTH_EVENT.loginFailed);      
     }
+
+    function broadcast(event) {
+      $rootScope.$broadcast(event);
+    }
+
+    return deferred.promise.then(broadcast, broadcast);
   };
 
   /**
@@ -85,7 +93,7 @@ module.service('myAuth', function (MYAUTH_EVENT, MyAuthUser, $rootScope, $sessio
 
 
 
-module.factory('MyAuthUser', function (MYAUTH_ROLE) {
+module.factory('MyAuthUser', function MyAuthUserFactory (MYAUTH_ROLE) {
 
   /**
    * Constructor for currentUser data

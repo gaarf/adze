@@ -49,9 +49,9 @@ angular.module(PKG.name)
 
     angular.forEach(MYAUTH_EVENT, function (v, k) {
       $rootScope.$on(v, function onAuthEvent (event) {
-        $state.go('home');
-        console.log(event);
-        $alert({content:event.name, type:'info', duration:5});
+        var isSuccess = event.name.match(/success$/);
+        $alert({content:event.name, type:isSuccess ? 'info' : 'warning', duration:5});
+        $state.go(isSuccess ? 'home' : 'login');
       });
     });
 

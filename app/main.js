@@ -1,35 +1,31 @@
 angular
   .module(PKG.name, [
 
-    angular
-      .module(PKG.name+'.services', [
-        'ngResource',
-        'ngStorage'
-      ]).name,
+    angular.module(PKG.name+'.services', [
+      'ngResource',
+      'ngStorage'
+    ]).name,
 
-    angular
-      .module(PKG.name+'.filters', [
-        PKG.name+'.services'
-      ]).name,
+    angular.module(PKG.name+'.filters', [
+      PKG.name+'.services'
+    ]).name,
 
-    angular
-      .module(PKG.name+'.controllers', [
-        PKG.name+'.services',
-        PKG.name+'.filters',
-        'mgcrea.ngStrap.alert',
-        'ui.router'
-      ]).name,
+    angular.module(PKG.name+'.controllers', [
+      PKG.name+'.services',
+      PKG.name+'.filters',
+      'mgcrea.ngStrap.alert',
+      'ui.router'
+    ]).name,
 
-    angular
-      .module(PKG.name+'.directives', [
-        PKG.name+'.services',
-        PKG.name+'.filters',
-        'mgcrea.ngStrap.tooltip',
-        'mgcrea.ngStrap.dropdown',
-        'mgcrea.ngStrap.modal',
-        'mgcrea.ngStrap.alert',
-        'mgcrea.ngStrap.popover'
-      ]).name,
+    angular.module(PKG.name+'.directives', [
+      PKG.name+'.services',
+      PKG.name+'.filters',
+      'mgcrea.ngStrap.alert',
+      'mgcrea.ngStrap.tooltip',
+      'mgcrea.ngStrap.popover',
+      'mgcrea.ngStrap.dropdown',
+      'mgcrea.ngStrap.modal'
+    ]).name,
 
     'ngAnimate',
     'ngSanitize',

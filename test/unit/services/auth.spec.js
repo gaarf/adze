@@ -31,6 +31,7 @@ describe('service', function() {
       describe('with missing password', function() {
         beforeEach(inject(function($injector) {
           myAuth.login({username:'test'});
+          $rootScope.$apply();
         }));
 
         it('does not authenticate', function() {
@@ -42,6 +43,7 @@ describe('service', function() {
       describe('with all credentials', function() {
         beforeEach(inject(function($injector) {
           myAuth.login({username:'test', tenant:'test', password:'test'});
+          $rootScope.$apply();
         }));
 
         it('is persisted', function() {
