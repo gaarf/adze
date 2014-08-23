@@ -47,6 +47,10 @@ angular.module(PKG.name)
   })
   .run(function ($rootScope, $state, $alert, MYAUTH_EVENT) {
 
+    ///////////////////////////////////
+    // Authentication Event handlers //
+    ///////////////////////////////////
+
     angular.forEach(MYAUTH_EVENT, function (v, k) {
       $rootScope.$on(v, function onAuthEvent (event) {
         var isSuccess = event.name.match(/success$/);

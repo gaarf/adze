@@ -1,7 +1,8 @@
 var module = angular.module(PKG.name+'.services');
 
 /*
-  inspired by https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
+  inspired by https://medium.com/opinionated-angularjs/
+    techniques-for-authentication-in-angularjs-applications-7bbf0346acec
  */
 
 module.constant('MYAUTH_EVENT', {
@@ -29,7 +30,7 @@ module.run(function ($rootScope, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
 
     var user = myAuth.currentUser;
     if (user) { // user is logged in
-      if (authorizedRoles === MYAUTH_ROLE.all) { return; } // any loggedin user is welcome
+      if (authorizedRoles === MYAUTH_ROLE.all) { return; } // any logged-in user is welcome
       if (user.hasRole(authorizedRoles)) { return; } // user is legit
     }
     // in all other cases, prevent going to this state

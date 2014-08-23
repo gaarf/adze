@@ -50,11 +50,16 @@ gulp.task('js:lib', function() {
       './bower_components/angular-ui-router/release/angular-ui-router.js',
 
       './bower_components/angular-strap/dist/modules/dimensions.js',
-      './bower_components/angular-strap/dist/modules/tooltip.{js,tpl.js}',
-      './bower_components/angular-strap/dist/modules/dropdown.{js,tpl.js}',
-      './bower_components/angular-strap/dist/modules/modal.{js,tpl.js}',
-      './bower_components/angular-strap/dist/modules/alert.{js,tpl.js}',
-      './bower_components/angular-strap/dist/modules/popover.{js,tpl.js}',
+      './bower_components/angular-strap/dist/modules/tooltip.js',
+      './bower_components/angular-strap/dist/modules/tooltip.tpl.js',
+      './bower_components/angular-strap/dist/modules/dropdown.js',
+      './bower_components/angular-strap/dist/modules/dropdown.tpl.js',
+      './bower_components/angular-strap/dist/modules/modal.js',
+      './bower_components/angular-strap/dist/modules/modal.tpl.js',
+      './bower_components/angular-strap/dist/modules/alert.js',
+      './bower_components/angular-strap/dist/modules/alert.tpl.js',
+      './bower_components/angular-strap/dist/modules/popover.js',
+      './bower_components/angular-strap/dist/modules/popover.tpl.js',
 
       './bower_components/ngstorage/ngStorage.js'
 
