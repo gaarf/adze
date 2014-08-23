@@ -1,10 +1,9 @@
 var module = angular.module(PKG.name+'.controllers');
 
 
-module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, $localStorage) {
+module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, $localStorage, cfpLoadingBar) {
 
-  var invalidAlert = $alert({title:'Error', content:"Invalid indentifier!", type:"danger", show: false}),
-      r = $localStorage.remember;
+  var r = $localStorage.remember;
 
   $scope.credentials = {
     username: r ? r.username : '',
@@ -12,14 +11,17 @@ module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, $localS
     remember: !!r
   };
 
-  $scope.login = function (c) {
-    if(!c.username || !c.tenant) {
-      invalidAlert.show();
-    } else {
-      myAuth.login(c).then(function(){
+  $scope.doLogin = function (c) {
+    $scope.submitting = true;
+    cfpLoadingBar.start();
+    myAuth.login(c)
+      .then(function(){
         $localStorage.remember = c.remember && myAuth.currentUser;
+      })
+      ['finally'](function(){
+        $scope.submitting = false;
+        cfpLoadingBar.complete();
       });
-    }
   };
 
   $scope.$on('$viewContentLoaded', function() { 
@@ -29,5 +31,4 @@ module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, $localS
     }
   });
 
-  $scope.$on('$destroy', invalidAlert.destroy);
 });

@@ -27,6 +27,7 @@ angular
       'mgcrea.ngStrap.modal'
     ]).name,
 
+    'angular-loading-bar',
     'ngAnimate',
     'ngSanitize',
     'ui.router'
@@ -46,6 +47,10 @@ angular
       animation: 'am-fade-and-slide-top',
       container: '#alerts > .container'
     });
+  })
+
+  .config(function (cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
   })
 
   ;

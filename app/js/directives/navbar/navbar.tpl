@@ -25,7 +25,9 @@
 
     <li class="dropdown">
       <a href="" class="dropdown-toggle">
-        Hello {{currentUser.username}} <span class="caret"></span>
+        <span ng-show="currentUser">Hello {{currentUser.username}}</span>
+        <span ng-hide="currentUser">Welcome</span>
+        <span class="caret"></span>
       </a>
     </li>
 

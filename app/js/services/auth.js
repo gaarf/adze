@@ -21,6 +21,9 @@ module.constant('MYAUTH_ROLE', {
   admin: 'admin'
 });
 
+
+
+
 module.run(function ($rootScope, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
   $rootScope.currentUser = myAuth.currentUser;
 
@@ -41,7 +44,12 @@ module.run(function ($rootScope, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
 });
 
 
-module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, $rootScope, $sessionStorage, $q) {
+
+
+
+
+
+module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, myAuthPromise, $rootScope, $sessionStorage) {
 
   this.currentUser = MyAuthUser.revive($sessionStorage.currentUser);
 
@@ -56,21 +64,15 @@ module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, $root
    * @param {object} c credentials
    */
   this.login = function (c) {
-    var deferred = $q.defer();
-
-    if(c.username && c.password) {
-      persist( new MyAuthUser(c) );
-      deferred.resolve(MYAUTH_EVENT.loginSuccess);
-    }
-    else {
-      deferred.reject(MYAUTH_EVENT.loginFailed);      
-    }
-
-    function broadcast(event) {
-      $rootScope.$broadcast(event);
-    }
-
-    return deferred.promise.then(broadcast, broadcast);
+    return myAuthPromise(c).then(
+      function() {
+        persist( new MyAuthUser(c) );
+        $rootScope.$broadcast(MYAUTH_EVENT.loginSuccess);
+      },
+      function() {
+        $rootScope.$broadcast(MYAUTH_EVENT.loginFailed);
+      }
+    );
   };
 
   /**
@@ -94,40 +96,62 @@ module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, $root
 
 
 
+
+
+module.factory('myAuthPromise', function myAuthPromiseFactory (MYAUTH_ROLE, $timeout, $q) {
+  return function myAuthPromise (c) {
+    var deferred = $q.defer();
+
+    $timeout(function(){
+      if (!c.password || !c.tenant || !c.username) {
+        deferred.reject();
+      }
+      else {
+        var a = MYAUTH_ROLE.admin;
+        if (c.username===a && c.password!==a) {
+          deferred.reject();
+        }
+        else {
+          deferred.resolve(c);
+        }
+      }
+    }, 500);
+
+    return deferred.promise;
+  }
+});
+
+
+
+
+
+
 module.factory('MyAuthUser', function MyAuthUserFactory (MYAUTH_ROLE) {
 
   /**
    * Constructor for currentUser data
-   * @param {object} c credentials
+   * @param {object} user data
    */
-  function User(c) {
-    this.username = c.username;
-    this.tenant = c.tenant;
+  function User(data) {
+    this.username = data.username;
+    this.tenant = data.tenant;
 
     // wholly insecure while we wait for real auth
-    var a = MYAUTH_ROLE.admin;
-    if(c.username===a && c.password===a) {
-      if(c.tenant===MYAUTH_ROLE.superadmin) {
-        this.role = MYAUTH_ROLE.superadmin;
-      }
-      else if(c.tenant) {
-        this.role = a;
-      }
+    if(data.tenant===MYAUTH_ROLE.superadmin) {
+      this.role = MYAUTH_ROLE.superadmin;
+    }
+    else if(data.tenant) {
+      this.role = MYAUTH_ROLE.admin;
     }
   }
 
   /**
-   * make a User from data instead of credentials
+   * attempts to make a User from data
    * @param  {Object} stored data
-   * @return {User}
+   * @return {User|null}
    */
   User.revive = function(data) {
-    if(data) {
-      var user = new User(data);
-      user.role = data.role;
-      return user;
-    }
-    else return null;
+    return angular.isObject(data) ? new User(data) : null;
   };
 
   /**

@@ -15,6 +15,7 @@ gulp.task('css:lib', ['fonts'], function() {
       './bower_components/angular/angular-csp.css',
       './bower_components/bootstrap/dist/css/bootstrap.min.css',
       './bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
+      './bower_components/angular-loading-bar/build/loading-bar.min.css',
       './bower_components/angular-motion/dist/angular-motion.min.css'
     ])
     .pipe(plug.concat('lib.css'))
@@ -61,7 +62,8 @@ gulp.task('js:lib', function() {
       './bower_components/angular-strap/dist/modules/popover.js',
       './bower_components/angular-strap/dist/modules/popover.tpl.js',
 
-      './bower_components/ngstorage/ngStorage.js'
+      './bower_components/ngstorage/ngStorage.js',
+      './bower_components/angular-loading-bar/build/loading-bar.js'
 
     ])
     .pipe(plug.concat('lib.js'))

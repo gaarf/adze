@@ -47,17 +47,30 @@ angular.module(PKG.name)
   })
   .run(function ($rootScope, $state, $alert, MYAUTH_EVENT) {
 
-    ///////////////////////////////////
-    // Authentication Event handlers //
-    ///////////////////////////////////
-
-    angular.forEach(MYAUTH_EVENT, function (v, k) {
-      $rootScope.$on(v, function onAuthEvent (event) {
-        var isSuccess = event.name.match(/success$/);
-        $alert({content:event.name, type:isSuccess ? 'info' : 'warning', duration:5});
-        $state.go(isSuccess ? 'home' : 'login');
-      });
+    $rootScope.$on(MYAUTH_EVENT.notAuthenticated, function (event) {
+      $alert({content:event.name, type:'warning', duration:3});
+      $state.go('login');
     });
+
+    $rootScope.$on(MYAUTH_EVENT.notAuthorized, function (event) {
+      $alert({content:event.name, type:'danger', duration:3});
+      $state.go('home');
+    });
+
+    angular.forEach([
+        MYAUTH_EVENT.loginSuccess,
+        MYAUTH_EVENT.logoutSuccess,
+        MYAUTH_EVENT.loginFailed,
+        MYAUTH_EVENT.sessionTimeout
+      ], 
+      function (v, k) {
+        $rootScope.$on(v, function (event) {
+          var s = event.name.match(/success$/);
+          $alert({content:event.name, type:s?'info':'warning', duration:3});
+          if(s) { $state.go('home'); }
+        });
+      }
+    );
 
   })
 

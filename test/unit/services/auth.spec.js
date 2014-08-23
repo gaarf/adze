@@ -21,18 +21,19 @@ describe('service', function() {
     });
 
     describe('login', function() {
-      var $rootScope, $sessionStorage;
+      var $rootScope, $sessionStorage, $timeout;
       beforeEach(inject(function($injector) {
+        $timeout = $injector.get('$timeout');
         $rootScope = $injector.get('$rootScope');
         $sessionStorage = $injector.get('$sessionStorage');
         spyOn($rootScope, '$broadcast').andCallThrough();
       }));
 
       describe('with missing password', function() {
-        beforeEach(inject(function($injector) {
+        beforeEach(function() {
           myAuth.login({username:'test'});
-          $rootScope.$apply();
-        }));
+          $timeout.flush();
+        });
 
         it('does not authenticate', function() {
           expect(myAuth.isAuthenticated()).toBe(false);
@@ -41,10 +42,10 @@ describe('service', function() {
       });
 
       describe('with all credentials', function() {
-        beforeEach(inject(function($injector) {
+        beforeEach(function() {
           myAuth.login({username:'test', tenant:'test', password:'test'});
-          $rootScope.$apply();
-        }));
+          $timeout.flush();
+        });
 
         it('is persisted', function() {
           expect(myAuth.isAuthenticated()).toBe(true);
@@ -76,7 +77,6 @@ describe('service', function() {
 
   });
 
-
   describe('MyAuthUser', function() {
     var MyAuthUser;
     beforeEach(inject(function($injector) {
@@ -105,7 +105,7 @@ describe('service', function() {
     });
 
     it('class has a revive method', function() {
-      var bob = MyAuthUser.revive({username:'bob'});
+      var bob = MyAuthUser.revive({username:'bob', tenant:'test'});
       expect(bob.username).toBe('bob');
       expect(bob).toEqual(jasmine.any(MyAuthUser));
     });
