@@ -67,8 +67,6 @@ describe('service', function() {
 
     });
 
-
-
     it('has login and logout methods', function() {
       expect(myAuth.login).toEqual(jasmine.any(Function));
       expect(myAuth.logout).toEqual(jasmine.any(Function));
