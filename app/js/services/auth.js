@@ -49,10 +49,16 @@ module.run(function ($rootScope, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
 
 
 
-module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, myAuthPromise, $rootScope, $sessionStorage) {
+module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, myAuthPromise, $rootScope, $sessionStorage, $localStorage) {
 
+  /**
+   * currentUser is initially revived with data in storage (or null)
+   */
   this.currentUser = MyAuthUser.revive($sessionStorage.currentUser);
 
+  /**
+   * private method to sync the user everywhere
+   */
   var persist = angular.bind(this, function (u) {
     this.currentUser = u;
     $sessionStorage.currentUser = u;
@@ -60,13 +66,27 @@ module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, myAut
   });
 
   /**
-   * login
-   * @param {object} c credentials
+   * remembered
+   * @return {object} credentials
    */
-  this.login = function (c) {
-    return myAuthPromise(c).then(
-      function() {
-        persist( new MyAuthUser(c) );
+  this.remembered = function () {
+    var r = $localStorage.remember;
+    return angular.extend({
+      remember: !!r
+    }, r || {});
+  };
+
+  /**
+   * login
+   * @param  {object} credentials
+   * @return {promise} resolved on sucessful login
+   */
+  this.login = function (credentials) {
+    return myAuthPromise(credentials).then(
+      function(data) {
+        var user = new MyAuthUser(data);
+        persist( user );
+        $localStorage.remember = credentials.remember && user;
         $rootScope.$broadcast(MYAUTH_EVENT.loginSuccess);
       },
       function() {
@@ -77,7 +97,6 @@ module.service('myAuth', function myAuthService (MYAUTH_EVENT, MyAuthUser, myAut
 
   /**
    * logout
-   * @param {object} c credentials
    */
   this.logout = function () {
     persist(null);
@@ -112,13 +131,14 @@ module.factory('myAuthPromise', function myAuthPromiseFactory (MYAUTH_ROLE, $tim
           deferred.reject();
         }
         else {
+          delete c.password;
           deferred.resolve(c);
         }
       }
-    }, 500);
+    }, 1500);
 
     return deferred.promise;
-  }
+  };
 });
 
 
@@ -137,11 +157,13 @@ module.factory('MyAuthUser', function MyAuthUserFactory (MYAUTH_ROLE) {
     this.tenant = data.tenant;
 
     // wholly insecure while we wait for real auth
-    if(data.tenant===MYAUTH_ROLE.superadmin) {
-      this.role = MYAUTH_ROLE.superadmin;
-    }
-    else if(data.tenant) {
-      this.role = MYAUTH_ROLE.admin;
+    if (data.username===MYAUTH_ROLE.admin) {
+      if(data.tenant===MYAUTH_ROLE.superadmin) {
+        this.role = MYAUTH_ROLE.superadmin;
+      }
+      else if(data.tenant) {
+        this.role = MYAUTH_ROLE.admin;
+      }
     }
   }
 

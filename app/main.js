@@ -14,6 +14,7 @@ angular
       PKG.name+'.services',
       PKG.name+'.filters',
       'mgcrea.ngStrap.alert',
+      'angular-loading-bar',
       'ui.router'
     ]).name,
 
