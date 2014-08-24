@@ -28,7 +28,8 @@ protractor spins up a server on port `9090`
 
 first make a clean build into `./dist` folder:
 `npm install && bower install`
-`gulp clean build minify`
+`gulp clean`
+`gulp build minify`
 
 then to run the server, possibly on a different host:
 `npm install --production`

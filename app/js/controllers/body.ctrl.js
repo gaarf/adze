@@ -3,11 +3,11 @@ var module = angular.module(PKG.name+'.controllers');
 
 module.controller('BodyCtrl', function ($scope, $log) {
 
-  $log.log('hello from BodyCtrl');
+  $log.log('hello from BodyCtrl', angular.version);
 
-  $scope.bodyAlertObj = {
+  $scope.bodyDemoObj = {
     "title": "Holy bodyAlertObj!",
-    "content": "lorem ipsum... Blah Blah Blah...",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     "type": "info"
   };
 

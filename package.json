@@ -37,7 +37,7 @@
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
     "merge-stream": "^0.1.5",
-    "protractor": "^1.0.0"
+    "protractor": "^1.1.1"
   },
   "dependencies": {
     "cors-anywhere": "^0.1.9",
