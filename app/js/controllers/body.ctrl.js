@@ -1,9 +1,7 @@
 var module = angular.module(PKG.name+'.controllers');
 
 
-module.controller('BodyCtrl', function ($scope, $log) {
-
-  $log.log('hello from BodyCtrl', angular.version);
+module.controller('BodyCtrl', function ($scope, $log, myApi) {
 
   $scope.bodyDemoObj = {
     "title": "Holy bodyAlertObj!",
@@ -11,4 +9,9 @@ module.controller('BodyCtrl', function ($scope, $log) {
     "type": "info"
   };
 
+  $log.log('hello from BodyCtrl', angular.version);
+
+  var cluster = new myApi.Cluster();
+  cluster.foo = 'bar';
+  cluster.$save();
 });

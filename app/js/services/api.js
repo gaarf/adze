@@ -2,11 +2,11 @@ var module = angular.module(PKG.name+'.services');
 
 module.factory('MYAPI_PREFIX', function($location){
   return $location.protocol() + '://' + $location.host() + 
-            ':' + $location.port() + '/localhost:55054/v1/loom/';
+                ':8081/0.0.0.0:55054/v1/loom/';
 });
 
 
-module.factory('myApi', function(myAuth,
+module.factory('myApi', function(
     myApi_clusters,
     myApi_hardwaretypes,
     myApi_imagetypes,
@@ -30,3 +30,21 @@ module.factory('myApi', function(myAuth,
 
 });
 
+module.config(function ($httpProvider) {
+  $httpProvider.interceptors.push(function(myAuth, MYAPI_PREFIX) {
+    return {
+     'request': function(config) {
+        var u = myAuth.currentUser;
+        if(config.url.indexOf(MYAPI_PREFIX) === 0) {
+          angular.extend(config.headers, {
+            'X-Requested-With': angular.version.codeName
+          }, u ? {
+            'X-Loom-UserID': u.username,
+            'X-Loom-TenantID': u.tenant
+          } : {});
+        }
+        return config;
+      }
+    };
+  });
+});
