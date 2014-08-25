@@ -4,10 +4,11 @@ describe('service', function() {
   beforeEach(module('coopr-ngui.services'));
 
   describe('myApi', function() {
-    var myApi, $rootScope, $httpBackend;
+    var myApi, myAuth, $rootScope, $httpBackend;
 
     beforeEach(inject(function($injector) {
       myApi = $injector.get('myApi');
+      myAuth = $injector.get('myAuth');
       $rootScope = $injector.get('$rootScope');
       $httpBackend = $injector.get('$httpBackend');
     }));
@@ -50,6 +51,25 @@ describe('service', function() {
         expect(item.foo).toEqual('bar');
       });
 
+      it('should send X-Requested-With header', function() {
+        $httpBackend.expectGET(/v1\/loom\/clusters$/, function(headers) {
+          return !!headers['X-Requested-With'];
+        }).respond(201, '');
+
+        myApi.Cluster.query();
+        $httpBackend.flush();
+      });
+
+      it('should send X-Loom headers when logged in', function() {
+        $httpBackend.expectGET(/v1\/loom\/clusters$/, function(headers) {
+          return headers['X-Loom-UserID'] === 'test';
+        }).respond(201, '');
+
+        myAuth.currentUser = {username:'test'};
+        myApi.Cluster.query();
+        $httpBackend.flush();
+        myAuth.currentUser = null;
+      });
     });
 
   });

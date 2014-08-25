@@ -11,7 +11,7 @@ module.controller('BodyCtrl', function ($scope, $log, myApi) {
 
   $log.log('hello from BodyCtrl', angular.version);
 
-  var cluster = new myApi.Cluster();
-  cluster.foo = 'bar';
-  cluster.$save();
+  // var cluster = new myApi.Cluster();
+  // cluster.foo = 'bar';
+  // cluster.$save();
 });
