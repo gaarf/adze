@@ -13,7 +13,7 @@
 
   <ul class="nav navbar-nav" ng-show="currentUser.hasRole('admin')">
     <li ng-repeat="link in navbarAdminLinks" ng-class="{active: $state.includes(link.sref)}">
-      <a ui-sref="{{link.sref}}">
+      <a ui-sref="{{link.sref + '.list'}}">
         <span ng-class="link.icon && 'fa fa-' + link.icon"></span>
         {{link.label}}
       </a>
@@ -22,7 +22,7 @@
 
   <ul class="nav navbar-nav" ng-show="currentUser">
     <li ng-class="{active: $state.includes('clusters')}">
-      <a ui-sref="clusters">
+      <a ui-sref="clusters.list">
         <span class="fa fa-cubes"></span>
         Clusters
       </a>

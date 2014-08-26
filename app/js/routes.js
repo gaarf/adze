@@ -10,6 +10,11 @@ angular.module(PKG.name)
       .otherwise('/');
 
 
+    var abstractSubNav = {
+      abstract: true,
+      templateUrl: '/partials/subnav.html'
+    };
+
     //////////////////////////
     // State Configurations //
     //////////////////////////
@@ -28,23 +33,32 @@ angular.module(PKG.name)
       })
 
 
-
-
       /*
         clusters
        */
 
-      .state("clusters", {
+      .state("clusters", angular.extend({
         url: "/clusters",
-        templateUrl: '/partials/lorem.html',
         data: {
           title: 'Clusters',
+          ddLabel: 'Clusters',
           authorizedRoles: MYAUTH_ROLE.all
         }
-      })
+      }, abstractSubNav))
+
+        .state("clusters.list", {
+          url: "",
+          templateUrl: '/partials/clusters/list.html',
+          controller: "ClustersListCtrl"
+        })
 
         .state("clusters.create", {
-          url: "/create"
+          url: "/create",
+          templateUrl: '/partials/clusters/create.html',
+          controller: "ClustersCreateCtrl",
+          data: {
+            title: 'Create a cluster'
+          }
         })
 
 
@@ -52,17 +66,26 @@ angular.module(PKG.name)
         cluster template catalog
        */
 
-      .state("templates", {
+      .state("templates", angular.extend({
         url: "/templates",
-        templateUrl: '/partials/lorem.html',
         data: {
           title: 'Catalog',
+          ddLabel: 'Templates',
           authorizedRoles: MYAUTH_ROLE.admin
         }
-      })
+      }, abstractSubNav))
+
+        .state("templates.list", {
+          url: "",
+          templateUrl: '/partials/lorem.html'
+        })
 
         .state("templates.create", {
-          url: "/create"
+          url: "/create",
+          templateUrl: '/partials/lorem.html',
+          data: {
+            title: 'Create a cluster template'
+          }
         })
 
 
@@ -70,17 +93,26 @@ angular.module(PKG.name)
         providers
        */
 
-      .state("providers", {
+      .state("providers", angular.extend({
         url: "/providers",
-        templateUrl: '/partials/lorem.html',
         data: {
           title: 'Providers',
+          ddLabel: 'Providers',
           authorizedRoles: MYAUTH_ROLE.admin
         }
-      })
+      }, abstractSubNav))
+
+        .state("providers.list", {
+          url: "",
+          templateUrl: '/partials/lorem.html'
+        })
 
         .state("providers.create", {
-          url: "/create"
+          url: "/create",
+          templateUrl: '/partials/lorem.html',
+          data: {
+            title: 'Create a provider'
+          }
         })
 
 
@@ -88,17 +120,26 @@ angular.module(PKG.name)
         hardwaretypes
        */
 
-      .state("hardwaretypes", {
+      .state("hardwaretypes", angular.extend({
         url: "/hardwaretypes",
-        templateUrl: '/partials/lorem.html',
         data: {
           title: 'Hardware',
+          ddLabel: 'Hardware Types',
           authorizedRoles: MYAUTH_ROLE.admin
         }
-      })
+      }, abstractSubNav))
+
+        .state("hardwaretypes.list", {
+          url: "",
+          templateUrl: '/partials/lorem.html'
+        })
 
         .state("hardwaretypes.create", {
-          url: "/create"
+          url: "/create",
+          templateUrl: '/partials/lorem.html',
+          data: {
+            title: 'Create a hardware type'
+          }
         })
 
 
@@ -106,34 +147,53 @@ angular.module(PKG.name)
         imagetypes
        */
 
-      .state("imagetypes", {
+      .state("imagetypes", angular.extend({
         url: "/imagetypes",
-        templateUrl: '/partials/lorem.html',
         data: {
           title: 'Images',
+          ddLabel: 'Image Types',
           authorizedRoles: MYAUTH_ROLE.admin
         }
-      })
+      }, abstractSubNav))
+
+        .state("imagetypes.list", {
+          url: "",
+          templateUrl: '/partials/lorem.html'
+        })
 
         .state("imagetypes.create", {
-          url: "/create"
+          url: "/create",
+          templateUrl: '/partials/lorem.html',
+          data: {
+            title: 'Create an image type'
+          }
         })
+
 
       /*
         services
        */
 
-      .state("services", {
+      .state("services", angular.extend({
         url: "/services",
-        templateUrl: '/partials/lorem.html',
         data: {
           title: 'Services',
+          ddLabel: 'Services',
           authorizedRoles: MYAUTH_ROLE.admin
         }
-      })
+      }, abstractSubNav))
+
+        .state("services.list", {
+          url: "",
+          templateUrl: '/partials/lorem.html'
+        })
 
         .state("services.create", {
-          url: "/create"
+          url: "/create",
+          templateUrl: '/partials/lorem.html',
+          data: {
+            title: 'Create a Service'
+          }
         })
 
       ;
@@ -148,7 +208,7 @@ angular.module(PKG.name)
 
     $rootScope.$on(MYAUTH_EVENT.loginSuccess, function (event) {
       $alert({title:event.name, content:"Hello, "+myAuth.currentUser.username+"!", type:'success', duration:3});
-      $state.go(myAuth.currentUser.hasRole(MYAUTH_ROLE.admin) ? 'home' : 'clusters');
+      $state.go(myAuth.currentUser.hasRole(MYAUTH_ROLE.admin) ? 'home' : 'clusters.list');
     });
 
     $rootScope.$on(MYAUTH_EVENT.logoutSuccess, function (event) {
@@ -156,10 +216,13 @@ angular.module(PKG.name)
       $state.go('home');
     });
 
+    $rootScope.$on(MYAUTH_EVENT.notAuthorized, function (event) {
+      $alert({title:event.name, content:"You are not allowed to access the requested page.", type:'warning', duration:3});
+    });
+
     angular.forEach([
         MYAUTH_EVENT.loginFailed,
         MYAUTH_EVENT.sessionTimeout,
-        MYAUTH_EVENT.notAuthorized,
         MYAUTH_EVENT.notAuthenticated
       ], 
       function (v, k) {

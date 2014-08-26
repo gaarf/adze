@@ -1,0 +1,29 @@
+<div class="page-header">
+
+  <div class="pull-right" role="navigation">
+    <div class="btn-group">
+
+      <a class="btn btn-default" ui-sref=".list" ng-class="{'active disabled': $state.includes('*.list')}">
+        <span class="fa fa-home"></span>
+        <span class="sr-only">Home</span>
+      </a>
+
+      <div class="btn-group">
+        <a class="btn btn-default dropdown-toggle" ng-class="{'active disabled': $state.includes('*.list')}">
+          {{$state.current.data.ddLabel | uppercase}}
+          <span class="caret"></span>
+        </a>
+      </div>
+
+      <a class="btn btn-default" ui-sref=".create" ng-class="{'active disabled': $state.includes('*.create')}">
+        <span class="fa fa-files-o"></span>
+        CREATE
+      </a>
+    </div>
+  </div>
+
+
+  <h1>{{$state.current.data.title || $state.current.name}}</h1>
+</div>
+
+<div ui-view></div>
