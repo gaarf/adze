@@ -10,11 +10,6 @@ angular.module(PKG.name)
       .otherwise('/');
 
 
-    var abstractSubNav = {
-      abstract: true,
-      templateUrl: '/partials/subnav.html'
-    };
-
     //////////////////////////
     // State Configurations //
     //////////////////////////
@@ -36,15 +31,9 @@ angular.module(PKG.name)
       /*
         clusters
        */
-
-      .state("clusters", angular.extend({
-        url: "/clusters",
-        data: {
-          title: 'Clusters',
-          ddLabel: 'Clusters',
-          authorizedRoles: MYAUTH_ROLE.all
-        }
-      }, abstractSubNav))
+      .state(abstractSubnav('clusters', {
+        authorizedRoles: MYAUTH_ROLE.all
+      }))
 
         .state("clusters.list", {
           url: "",
@@ -66,14 +55,10 @@ angular.module(PKG.name)
         cluster template catalog
        */
 
-      .state("templates", angular.extend({
-        url: "/templates",
-        data: {
-          title: 'Catalog',
-          ddLabel: 'Templates',
-          authorizedRoles: MYAUTH_ROLE.admin
-        }
-      }, abstractSubNav))
+      .state(abstractSubnav('templates', {
+        title: 'Catalog',
+        authorizedRoles: MYAUTH_ROLE.admin
+      }))
 
         .state("templates.list", {
           url: "",
@@ -93,14 +78,9 @@ angular.module(PKG.name)
         providers
        */
 
-      .state("providers", angular.extend({
-        url: "/providers",
-        data: {
-          title: 'Providers',
-          ddLabel: 'Providers',
-          authorizedRoles: MYAUTH_ROLE.admin
-        }
-      }, abstractSubNav))
+      .state(abstractSubnav('providers', {
+        authorizedRoles: MYAUTH_ROLE.admin
+      }))
 
         .state("providers.list", {
           url: "",
@@ -120,14 +100,12 @@ angular.module(PKG.name)
         hardwaretypes
        */
 
-      .state("hardwaretypes", angular.extend({
-        url: "/hardwaretypes",
-        data: {
-          title: 'Hardware',
-          ddLabel: 'Hardware Types',
-          authorizedRoles: MYAUTH_ROLE.admin
-        }
-      }, abstractSubNav))
+      .state(abstractSubnav('hardwaretypes', {
+        title: 'Hardware',
+        ddLabel: 'Hardware Types',
+        ddModel: 'HardwareType',
+        authorizedRoles: MYAUTH_ROLE.admin
+      }))
 
         .state("hardwaretypes.list", {
           url: "",
@@ -147,14 +125,12 @@ angular.module(PKG.name)
         imagetypes
        */
 
-      .state("imagetypes", angular.extend({
-        url: "/imagetypes",
-        data: {
-          title: 'Images',
-          ddLabel: 'Image Types',
-          authorizedRoles: MYAUTH_ROLE.admin
-        }
-      }, abstractSubNav))
+      .state(abstractSubnav('imagetypes', {
+        title: 'Images',
+        ddLabel: 'Image Types',
+        ddModel: 'ImageType',
+        authorizedRoles: MYAUTH_ROLE.admin
+      }))
 
         .state("imagetypes.list", {
           url: "",
@@ -173,15 +149,9 @@ angular.module(PKG.name)
       /*
         services
        */
-
-      .state("services", angular.extend({
-        url: "/services",
-        data: {
-          title: 'Services',
-          ddLabel: 'Services',
-          authorizedRoles: MYAUTH_ROLE.admin
-        }
-      }, abstractSubNav))
+      .state(abstractSubnav('services', {
+        authorizedRoles: MYAUTH_ROLE.admin
+      }))
 
         .state("services.list", {
           url: "",
@@ -197,6 +167,30 @@ angular.module(PKG.name)
         })
 
       ;
+
+
+    /**
+     * create an abstract state object
+     * @param  {String} name of the state
+     * @param  {Object} data optional overrides
+     * @return {Object}      state object
+     */
+    function abstractSubnav(name, data) {
+      var human = name.substring(0,1).toUpperCase() + name.substring(1);
+      return {
+        name: name,
+        abstract: true,
+        templateUrl: '/partials/subnav.html',
+        controller: 'SubnavCtrl',
+        url: '/' + name,
+        data: angular.extend({
+          title: human, // capitalized name
+          ddLabel: human, // same as above
+          ddModel: human.substring(0, human.length-1) // remove the plural
+        }, data || {})
+      };
+    }
+
   })
   .run(function ($rootScope, $state, $alert, $timeout, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
 

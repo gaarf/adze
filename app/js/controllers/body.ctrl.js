@@ -1,7 +1,7 @@
 var module = angular.module(PKG.name+'.controllers');
 
 
-module.controller('BodyCtrl', function ($scope, $log, myApi) {
+module.controller('BodyCtrl', function ($scope, $log) {
 
   $scope.bodyDemoObj = {
     "title": "Holy bodyAlertObj!",
