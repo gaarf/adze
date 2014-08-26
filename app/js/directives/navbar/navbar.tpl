@@ -8,19 +8,19 @@
   <a class="navbar-brand" href="/">Coopr</a>
 </div>
 <div class="collapse navbar-collapse" ng-class="{in:navbarCollapsed}">
-  <ul class="nav navbar-nav">
 
+  <ul class="nav navbar-nav" ng-show="currentUser">
     <li ui-sref-active="active">
-      <a ui-sref="home">Home</a>
+      <a ui-sref="clusters">Clusters</a>
     </li>
-    <li ui-sref-active="active">
-      <a ui-sref="hello">Hello</a>
-    </li>
-    <li ui-sref-active="active">
-      <a ui-sref="admin">Admin</a>
-    </li>
-
   </ul>
+
+  <ul class="nav navbar-nav" ng-show="currentUser.hasRole('admin')">
+    <li ui-sref-active="active" ng-repeat="(sref, label) in navbarAdminLinks">
+      <a ui-sref="{{sref}}">{{label}}</a>
+    </li>
+  </ul>
+
   <ul class="nav navbar-nav navbar-right">
 
     <li class="dropdown">

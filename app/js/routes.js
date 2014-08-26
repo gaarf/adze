@@ -27,47 +27,140 @@ angular.module(PKG.name)
         controller: "LoginCtrl"
       })
 
-      .state("hello", {
-        url: "/hello",
-        templateUrl: '/partials/hello.html',
+
+
+
+      /*
+        clusters
+       */
+
+      .state("clusters", {
+        url: "/clusters",
+        templateUrl: '/partials/lorem.html',
         data: {
+          title: 'Clusters',
           authorizedRoles: MYAUTH_ROLE.all
         }
       })
 
-      .state("admin", {
-        url: "/admin",
-        templateUrl: '/partials/admin.html',
+        .state("clusters.create", {
+          url: "/create"
+        })
+
+
+      /*
+        cluster template catalog
+       */
+
+      .state("templates", {
+        url: "/templates",
+        templateUrl: '/partials/lorem.html',
         data: {
+          title: 'Catalog',
           authorizedRoles: MYAUTH_ROLE.admin
         }
       })
 
+        .state("templates.create", {
+          url: "/create"
+        })
+
+
+      /*
+        providers
+       */
+
+      .state("providers", {
+        url: "/providers",
+        templateUrl: '/partials/lorem.html',
+        data: {
+          title: 'Providers',
+          authorizedRoles: MYAUTH_ROLE.admin
+        }
+      })
+
+        .state("providers.create", {
+          url: "/create"
+        })
+
+
+      /*
+        hardwaretypes
+       */
+
+      .state("hardwaretypes", {
+        url: "/hardwaretypes",
+        templateUrl: '/partials/lorem.html',
+        data: {
+          title: 'Hardware',
+          authorizedRoles: MYAUTH_ROLE.admin
+        }
+      })
+
+        .state("hardwaretypes.create", {
+          url: "/create"
+        })
+
+
+      /*
+        imagetypes
+       */
+
+      .state("imagetypes", {
+        url: "/imagetypes",
+        templateUrl: '/partials/lorem.html',
+        data: {
+          title: 'Images',
+          authorizedRoles: MYAUTH_ROLE.admin
+        }
+      })
+
+        .state("imagetypes.create", {
+          url: "/create"
+        })
+
+      /*
+        services
+       */
+
+      .state("services", {
+        url: "/services",
+        templateUrl: '/partials/lorem.html',
+        data: {
+          title: 'Services',
+          authorizedRoles: MYAUTH_ROLE.admin
+        }
+      })
+
+        .state("services.create", {
+          url: "/create"
+        })
+
       ;
   })
-  .run(function ($rootScope, $state, $alert, MYAUTH_EVENT) {
+  .run(function ($rootScope, $state, $alert, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
 
-    $rootScope.$on(MYAUTH_EVENT.notAuthenticated, function (event) {
-      $alert({content:event.name, type:'warning', duration:3});
-      $state.go('login');
+
+    $rootScope.$on(MYAUTH_EVENT.loginSuccess, function (event) {
+      $alert({title:event.name, content:"Hello, "+myAuth.currentUser.username+"!", type:'success', duration:3});
+      $state.go(myAuth.currentUser.hasRole(MYAUTH_ROLE.admin) ? 'home' : 'clusters');
     });
 
-    $rootScope.$on(MYAUTH_EVENT.notAuthorized, function (event) {
-      $alert({content:event.name, type:'danger', duration:3});
+    $rootScope.$on(MYAUTH_EVENT.logoutSuccess, function (event) {
+      $alert({title:event.name, content:"Bye for now!", type:'info', duration:3});
       $state.go('home');
     });
 
     angular.forEach([
-        MYAUTH_EVENT.loginSuccess,
-        MYAUTH_EVENT.logoutSuccess,
         MYAUTH_EVENT.loginFailed,
-        MYAUTH_EVENT.sessionTimeout
+        MYAUTH_EVENT.sessionTimeout,
+        MYAUTH_EVENT.notAuthorized,
+        MYAUTH_EVENT.notAuthenticated
       ], 
       function (v, k) {
         $rootScope.$on(v, function (event) {
-          var s = event.name.match(/success$/);
-          $alert({content:event.name, type:s?'info':'warning', duration:3});
-          if(s) { $state.go('home'); }
+          $alert({title:event.name, type:'danger', duration:3});
+          $state.is('login') || $state.go('login');
         });
       }
     );

@@ -7,14 +7,22 @@ module.directive('myNavbar', function($dropdown, myAuth) {
 
     link: function(scope, element, attrs) {
 
-      scope.logout = myAuth.logout;
-
       $dropdown(angular.element(element[0].querySelector('a.dropdown-toggle')), {
         template: 'navbar/dropdown.tpl',
         animation: 'am-flip-x',
         placement: 'bottom-right',
         scope: scope
       });
+
+      scope.logout = myAuth.logout;
+
+      scope.navbarAdminLinks = {
+        'templates': 'Templates',
+        'providers': 'Providers',
+        'hardwaretypes': 'Hardware',
+        'imagetypes': 'Images',
+        'services': 'Services'
+      };
 
     }
   };
