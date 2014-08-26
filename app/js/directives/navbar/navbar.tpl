@@ -5,19 +5,27 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a class="navbar-brand" href="/">Coopr</a>
+  <a class="navbar-brand" href="/">
+     Coopr
+   </a>
 </div>
 <div class="collapse navbar-collapse" ng-class="{in:navbarCollapsed}">
 
-  <ul class="nav navbar-nav" ng-show="currentUser">
-    <li ui-sref-active="active">
-      <a ui-sref="clusters">Clusters</a>
+  <ul class="nav navbar-nav" ng-show="currentUser.hasRole('admin')">
+    <li ng-repeat="link in navbarAdminLinks" ng-class="{active: $state.includes(link.sref)}">
+      <a ui-sref="{{link.sref}}">
+        <span class="fa" ng-class="link.icon && 'fa-' + link.icon"></span>
+        {{link.label}}
+      </a>
     </li>
   </ul>
 
-  <ul class="nav navbar-nav" ng-show="currentUser.hasRole('admin')">
-    <li ui-sref-active="active" ng-repeat="(sref, label) in navbarAdminLinks">
-      <a ui-sref="{{sref}}">{{label}}</a>
+  <ul class="nav navbar-nav" ng-show="currentUser">
+    <li ng-class="{active: $state.includes('clusters')}">
+      <a ui-sref="clusters">
+        <span class="fa fa-cubes"></span>
+        Clusters
+      </a>
     </li>
   </ul>
 

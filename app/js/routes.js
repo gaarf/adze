@@ -138,8 +138,13 @@ angular.module(PKG.name)
 
       ;
   })
-  .run(function ($rootScope, $state, $alert, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
+  .run(function ($rootScope, $state, $alert, $timeout, myAuth, MYAUTH_EVENT, MYAUTH_ROLE) {
 
+    if(!myAuth.currentUser) {
+      $timeout(function() {
+        $state.go('login');        
+      });
+    }
 
     $rootScope.$on(MYAUTH_EVENT.loginSuccess, function (event) {
       $alert({title:event.name, content:"Hello, "+myAuth.currentUser.username+"!", type:'success', duration:3});

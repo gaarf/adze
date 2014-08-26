@@ -16,13 +16,13 @@ module.directive('myNavbar', function($dropdown, myAuth) {
 
       scope.logout = myAuth.logout;
 
-      scope.navbarAdminLinks = {
-        'templates': 'Templates',
-        'providers': 'Providers',
-        'hardwaretypes': 'Hardware',
-        'imagetypes': 'Images',
-        'services': 'Services'
-      };
+      scope.navbarAdminLinks = [
+        {sref: 'templates',     label: 'Catalog',   icon: 'folder-open-o'},
+        {sref: 'providers',     label: 'Providers', icon: 'cloud-upload'},
+        {sref: 'hardwaretypes', label: 'Hardware',  icon: 'cube'},
+        {sref: 'imagetypes',    label: 'Images',    icon: 'image'},
+        {sref: 'services',      label: 'Services',  icon: 'cog'}
+      ];
 
     }
   };

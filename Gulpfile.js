@@ -16,14 +16,18 @@ gulp.task('css:lib', ['fonts'], function() {
       './bower_components/bootstrap/dist/css/bootstrap.min.css',
       './bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
       './bower_components/angular-loading-bar/build/loading-bar.min.css',
-      './bower_components/angular-motion/dist/angular-motion.min.css'
+      './bower_components/angular-motion/dist/angular-motion.min.css',
+      './bower_components/font-awesome/css/font-awesome.min.css'
     ])
     .pipe(plug.concat('lib.css'))
     .pipe(gulp.dest('./dist/bundle'));
 });
 
 gulp.task('fonts', function() {
-  return gulp.src('./bower_components/bootstrap/dist/fonts/*')
+  return gulp.src([
+      './bower_components/bootstrap/dist/fonts/*',
+      './bower_components/font-awesome/fonts/*'
+    ])
     .pipe(gulp.dest('./dist/fonts'));
 });
 
