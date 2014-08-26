@@ -14,7 +14,7 @@
   <ul class="nav navbar-nav" ng-show="currentUser.hasRole('admin')">
     <li ng-repeat="link in navbarAdminLinks" ng-class="{active: $state.includes(link.sref)}">
       <a ui-sref="{{link.sref}}">
-        <span class="fa" ng-class="link.icon && 'fa-' + link.icon"></span>
+        <span ng-class="link.icon && 'fa fa-' + link.icon"></span>
         {{link.label}}
       </a>
     </li>
@@ -33,8 +33,13 @@
 
     <li class="dropdown">
       <a href="" class="dropdown-toggle">
-        <span ng-show="currentUser">Hello {{currentUser.username}}</span>
-        <span ng-hide="currentUser">Welcome</span>
+        <span ng-show="currentUser">
+          <span class="fa fa-user"></span>
+          {{currentUser.username | myCapitalizeFilter}}
+        </span>
+        <span ng-hide="currentUser">
+          Not authenticated
+        </span>
         <span class="caret"></span>
       </a>
     </li>
