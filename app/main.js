@@ -1,3 +1,5 @@
+console.time(PKG.name);
+
 angular
   .module(PKG.name, [
 

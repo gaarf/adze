@@ -7,7 +7,9 @@ angular.module(PKG.name)
 
     $urlRouterProvider
       .when('/signin', '/login')
-      .otherwise('/');
+      .otherwise(function($injector, $location){
+        $injector.get('$state').go($location.path() ? '404' : 'home');
+      });
 
 
     //////////////////////////
@@ -16,15 +18,19 @@ angular.module(PKG.name)
 
     $stateProvider
 
-      .state("home", {
-        url: "/",
+      .state('home', {
+        url: '/',
         templateUrl: '/partials/home.html'
       })
 
-      .state("login", {
-        url: "/login",
+      .state('404', {
+        templateUrl: '/partials/404.html'
+      })
+
+      .state('login', {
+        url: '/login',
         templateUrl: '/partials/login.html',
-        controller: "LoginCtrl"
+        controller: 'LoginCtrl'
       })
 
 
@@ -35,16 +41,22 @@ angular.module(PKG.name)
         authorizedRoles: MYAUTH_ROLE.all
       }))
 
-        .state("clusters.list", {
-          url: "",
+        .state('clusters.list', {
+          url: '',
           templateUrl: '/partials/clusters/list.html',
-          controller: "ClustersListCtrl"
+          controller: 'ClustersListCtrl'
         })
 
-        .state("clusters.create", {
-          url: "/create",
+        .state('clusters.edit', {
+          url: '/edit/:id',
+          templateUrl: '/partials/clusters/edit.html',
+          controller: 'ClustersEditCtrl'
+        })
+
+        .state('clusters.create', {
+          url: '/create',
           templateUrl: '/partials/clusters/create.html',
-          controller: "ClustersCreateCtrl",
+          controller: 'ClustersCreateCtrl',
           data: {
             title: 'Create a cluster'
           }
@@ -60,13 +72,13 @@ angular.module(PKG.name)
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
-        .state("templates.list", {
-          url: "",
+        .state('templates.list', {
+          url: '',
           templateUrl: '/partials/lorem.html'
         })
 
-        .state("templates.create", {
-          url: "/create",
+        .state('templates.create', {
+          url: '/create',
           templateUrl: '/partials/lorem.html',
           data: {
             title: 'Create a cluster template'
@@ -82,13 +94,13 @@ angular.module(PKG.name)
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
-        .state("providers.list", {
-          url: "",
+        .state('providers.list', {
+          url: '',
           templateUrl: '/partials/lorem.html'
         })
 
-        .state("providers.create", {
-          url: "/create",
+        .state('providers.create', {
+          url: '/create',
           templateUrl: '/partials/lorem.html',
           data: {
             title: 'Create a provider'
@@ -107,13 +119,13 @@ angular.module(PKG.name)
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
-        .state("hardwaretypes.list", {
-          url: "",
+        .state('hardwaretypes.list', {
+          url: '',
           templateUrl: '/partials/lorem.html'
         })
 
-        .state("hardwaretypes.create", {
-          url: "/create",
+        .state('hardwaretypes.create', {
+          url: '/create',
           templateUrl: '/partials/lorem.html',
           data: {
             title: 'Create a hardware type'
@@ -132,13 +144,13 @@ angular.module(PKG.name)
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
-        .state("imagetypes.list", {
-          url: "",
+        .state('imagetypes.list', {
+          url: '',
           templateUrl: '/partials/lorem.html'
         })
 
-        .state("imagetypes.create", {
-          url: "/create",
+        .state('imagetypes.create', {
+          url: '/create',
           templateUrl: '/partials/lorem.html',
           data: {
             title: 'Create an image type'
@@ -153,13 +165,13 @@ angular.module(PKG.name)
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
-        .state("services.list", {
-          url: "",
+        .state('services.list', {
+          url: '',
           templateUrl: '/partials/lorem.html'
         })
 
-        .state("services.create", {
-          url: "/create",
+        .state('services.create', {
+          url: '/create',
           templateUrl: '/partials/lorem.html',
           data: {
             title: 'Create a Service'
@@ -201,17 +213,17 @@ angular.module(PKG.name)
     }
 
     $rootScope.$on(MYAUTH_EVENT.loginSuccess, function (event) {
-      $alert({title:event.name, content:"Hello, "+myAuth.currentUser.username+"!", type:'success', duration:3});
+      $alert({title:event.name, content:'Hello, '+myAuth.currentUser.username+'!', type:'success', duration:3});
       $state.go(myAuth.currentUser.hasRole(MYAUTH_ROLE.admin) ? 'home' : 'clusters.list');
     });
 
     $rootScope.$on(MYAUTH_EVENT.logoutSuccess, function (event) {
-      $alert({title:event.name, content:"Bye for now!", type:'info', duration:3});
+      $alert({title:event.name, content:'Bye for now!', type:'info', duration:3});
       $state.go('home');
     });
 
     $rootScope.$on(MYAUTH_EVENT.notAuthorized, function (event) {
-      $alert({title:event.name, content:"You are not allowed to access the requested page.", type:'warning', duration:3});
+      $alert({title:event.name, content:'You are not allowed to access the requested page.', type:'warning', duration:3});
     });
 
     angular.forEach([

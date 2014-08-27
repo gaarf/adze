@@ -10,7 +10,6 @@ module.controller('SubnavCtrl', function ($scope, $state, myApi) {
   myApi[$state.current.data.ddModel].query(function(list) {
 
     $scope.dropdown = list.map(function(item) {
-      console.log(item);
       return {
         text: item.name,
         href: '#' + rootState.url + '/edit/' + (item.id || item.name)

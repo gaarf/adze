@@ -1,7 +1,7 @@
 var module = angular.module(PKG.name+'.controllers');
 
 
-module.controller('BodyCtrl', function ($scope, $log) {
+module.controller('BodyCtrl', function ($scope) {
 
   $scope.bodyDemoObj = {
     "title": "Holy bodyAlertObj!",
@@ -9,6 +9,5 @@ module.controller('BodyCtrl', function ($scope, $log) {
     "type": "info"
   };
 
-  $log.log('hello from BodyCtrl', angular.version);
-
+  console.timeEnd(PKG.name);
 });

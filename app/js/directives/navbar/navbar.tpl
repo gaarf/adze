@@ -11,23 +11,26 @@
 </div>
 <div class="collapse navbar-collapse" ng-class="{in:navbarCollapsed}">
 
-  <ul class="nav navbar-nav" ng-show="currentUser.hasRole('admin')">
-    <li ng-repeat="link in navbarAdminLinks" ng-class="{active: $state.includes(link.sref)}">
-      <a ui-sref="{{link.sref + '.list'}}">
-        <span ng-class="link.icon && 'fa fa-' + link.icon"></span>
-        {{link.label}}
-      </a>
-    </li>
-  </ul>
+  <div ng-class="{bigicons: currentUser.hasRole('admin')}">
+    <ul class="nav navbar-nav" ng-show="currentUser.hasRole('admin')">
+      <li ng-repeat="link in navbarAdminLinks" ng-class="{active: $state.includes(link.sref)}">
+        <a ui-sref="{{link.sref + '.list'}}">
+          <span ng-class="link.icon && 'fa fa-' + link.icon"></span>
+          {{link.label}}
+        </a>
+      </li>
+    </ul>
 
-  <ul class="nav navbar-nav" ng-show="currentUser">
-    <li ng-class="{active: $state.includes('clusters')}">
-      <a ui-sref="clusters.list">
-        <span class="fa fa-cubes"></span>
-        Clusters
-      </a>
-    </li>
-  </ul>
+    <ul class="nav navbar-nav" ng-show="currentUser">
+      <li ng-class="{active: $state.includes('clusters')}">
+        <a ui-sref="clusters.list">
+          <span class="fa fa-cubes"></span>
+          Clusters
+        </a>
+      </li>
+    </ul>
+
+  </div>
 
   <ul class="nav navbar-nav navbar-right">
 
