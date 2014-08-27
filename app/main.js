@@ -47,7 +47,7 @@ angular
 
   .config(function ($alertProvider) {
     angular.extend($alertProvider.defaults, {
-      animation: 'am-fade-and-slide-top',
+      animation: 'am-fade-and-scale',
       container: '#alerts > .container'
     });
   })
@@ -56,6 +56,8 @@ angular
     cfpLoadingBarProvider.includeSpinner = false;
   })
 
-  ;
-  
-
+  .run(function ($rootScope, $alert, MYAPI_EVENT){
+    $rootScope.$on(MYAPI_EVENT.error, function (event, rejection) {
+      $alert({title:'API error', content:rejection.data, type:'danger', duration:3});
+    });
+  });

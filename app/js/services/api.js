@@ -6,6 +6,11 @@ module.factory('MYAPI_PREFIX', function($location){
 });
 
 
+module.constant('MYAPI_EVENT', {
+  error: 'myapi-error'
+});
+
+
 module.factory('myApi', function(
     myApi_clusters,
     myApi_hardwaretypes,
@@ -31,11 +36,15 @@ module.factory('myApi', function(
 });
 
 module.config(function ($httpProvider) {
-  $httpProvider.interceptors.push(function(myAuth, MYAPI_PREFIX) {
+  $httpProvider.interceptors.push(function ($q, $rootScope, myAuth, MYAPI_PREFIX, MYAPI_EVENT) {
+    var isApi = function(url) {
+      return url.indexOf(MYAPI_PREFIX) === 0;
+    };
+
     return {
      'request': function(config) {
-        var u = myAuth.currentUser;
-        if(config.url.indexOf(MYAPI_PREFIX) === 0) {
+        if(isApi(config.url)) {
+          var u = myAuth.currentUser;
           angular.extend(config.headers, {
             'X-Requested-With': angular.version.codeName
           }, u ? {
@@ -44,7 +53,15 @@ module.config(function ($httpProvider) {
           } : {});
         }
         return config;
+      },
+
+     'responseError': function(rejection) {
+        if(isApi(rejection.config.url)) {
+          $rootScope.$broadcast(MYAPI_EVENT.error, rejection);
+        }
+        return $q.reject(rejection);
       }
+
     };
   });
 });

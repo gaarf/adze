@@ -6,12 +6,12 @@ var module = angular.module(PKG.name+'.services');
  */
 
 module.constant('MYAUTH_EVENT', {
-  loginSuccess: 'auth-login-success',
-  loginFailed: 'auth-login-failed',
-  logoutSuccess: 'auth-logout-success',
-  sessionTimeout: 'auth-session-timeout',
-  notAuthenticated: 'auth-not-authenticated',
-  notAuthorized: 'auth-not-authorized'
+  loginSuccess: 'myauth-login-success',
+  loginFailed: 'myauth-login-failed',
+  logoutSuccess: 'myauth-logout-success',
+  sessionTimeout: 'myauth-session-timeout',
+  notAuthenticated: 'myauth-not-authenticated',
+  notAuthorized: 'myauth-not-authorized'
 });
 
 

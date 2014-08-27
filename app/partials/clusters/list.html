@@ -1,1 +1,28 @@
-Live clusters
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>owner</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in list">
+
+      <td><a ui-sref="^.edit({id: item.id})">{{item.id}}</a></td>
+
+      <td>{{item.name}}</td>
+
+      <td>{{item.ownerId}}</td>
+
+      <td><span class="label" ng-class="{
+        'label-success': item.status==='ACTIVE',
+        'label-info': item.status!=='ACTIVE'
+      }">{{item.status}}</span></td>
+
+    </tr>
+  </tbody>
+</table>
+
+

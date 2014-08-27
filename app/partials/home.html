@@ -31,6 +31,9 @@
 </p>
 
 
-<p ng-hide="currentUser">you are logged out</p>
+<p ng-hide="currentUser">
+  you are logged out
+  (<a ui-sref="login">log in</a>)
+</p>
 
 <p ng-show="currentUser">you are logged in {{currentUser}}</p>

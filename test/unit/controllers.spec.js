@@ -23,8 +23,8 @@ describe('controller', function(){
       expect($scope.credentials).toBeDefined();
     });
 
-    xit('has a login method', function() {
-      expect($scope.login).toEqual(jasmine.any(Function));
+    it('has a doLogin method', function() {
+      expect($scope.doLogin).toEqual(jasmine.any(Function));
     });
 
   });

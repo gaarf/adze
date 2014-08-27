@@ -35,22 +35,29 @@ angular.module(PKG.name)
 
 
       /*
-        clusters
+        /#/clusters/...
        */
-      .state(abstractSubnav('clusters', {
+
+      .state(abstractSubnav('Cluster', {
         authorizedRoles: MYAUTH_ROLE.all
       }))
 
         .state('clusters.list', {
           url: '',
           templateUrl: '/partials/clusters/list.html',
-          controller: 'ClustersListCtrl'
+          controller: 'ClustersListCtrl',
+          data: {
+            title: 'Live clusters'
+          }
         })
 
         .state('clusters.edit', {
           url: '/edit/:id',
           templateUrl: '/partials/clusters/edit.html',
-          controller: 'ClustersEditCtrl'
+          controller: 'ClustersEditCtrl',
+          data: {
+            title: 'Edit cluster'
+          }
         })
 
         .state('clusters.create', {
@@ -64,11 +71,12 @@ angular.module(PKG.name)
 
 
       /*
-        cluster template catalog
+        /#/catalog/...
        */
 
-      .state(abstractSubnav('templates', {
+      .state(abstractSubnav('Template', {
         title: 'Catalog',
+        ddLabel: 'Cluster Templates',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
@@ -87,10 +95,10 @@ angular.module(PKG.name)
 
 
       /*
-        providers
+        /#/providers/...
        */
 
-      .state(abstractSubnav('providers', {
+      .state(abstractSubnav('Provider', {
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
@@ -109,13 +117,12 @@ angular.module(PKG.name)
 
 
       /*
-        hardwaretypes
+        /#/hardwaretypes/...
        */
 
-      .state(abstractSubnav('hardwaretypes', {
+      .state(abstractSubnav('HardwareType', {
         title: 'Hardware',
         ddLabel: 'Hardware Types',
-        ddModel: 'HardwareType',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
@@ -134,13 +141,12 @@ angular.module(PKG.name)
 
 
       /*
-        imagetypes
+        /#/imagetypes/...
        */
 
-      .state(abstractSubnav('imagetypes', {
+      .state(abstractSubnav('ImageType', {
         title: 'Images',
         ddLabel: 'Image Types',
-        ddModel: 'ImageType',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
@@ -159,9 +165,9 @@ angular.module(PKG.name)
 
 
       /*
-        services
+        /#/services/...
        */
-      .state(abstractSubnav('services', {
+      .state(abstractSubnav('Service', {
         authorizedRoles: MYAUTH_ROLE.admin
       }))
 
@@ -182,23 +188,25 @@ angular.module(PKG.name)
 
 
     /**
-     * create an abstract state object
-     * @param  {String} name of the state
+     * create an abstract state object by assuming defaults
+     * @param  {String} name of the model to base on eg 'Cluster'
      * @param  {Object} data optional overrides
      * @return {Object}      state object
      */
     function abstractSubnav(name, data) {
-      var human = name.substring(0,1).toUpperCase() + name.substring(1);
+      var lower = name.toLowerCase(),
+          plural = name + 's',
+          stateName = plural.toLowerCase()
       return {
-        name: name,
+        name: stateName,
         abstract: true,
         templateUrl: '/partials/subnav.html',
         controller: 'SubnavCtrl',
-        url: '/' + name,
+        url: '/' + stateName,
         data: angular.extend({
-          title: human, // capitalized name
-          ddLabel: human, // same as above
-          ddModel: human.substring(0, human.length-1) // remove the plural
+          title: plural,
+          ddLabel: plural,
+          ddModel: name
         }, data || {})
       };
     }
@@ -213,17 +221,17 @@ angular.module(PKG.name)
     }
 
     $rootScope.$on(MYAUTH_EVENT.loginSuccess, function (event) {
-      $alert({title:event.name, content:'Hello, '+myAuth.currentUser.username+'!', type:'success', duration:3});
+      $alert({title:'Welcome!', content:'Your tenant is "'+myAuth.currentUser.tenant+'".', type:'success', duration:3});
       $state.go(myAuth.currentUser.hasRole(MYAUTH_ROLE.admin) ? 'home' : 'clusters.list');
     });
 
     $rootScope.$on(MYAUTH_EVENT.logoutSuccess, function (event) {
-      $alert({title:event.name, content:'Bye for now!', type:'info', duration:3});
+      $alert({title:'Bye!', content:'You are now logged out.', type:'info', duration:3});
       $state.go('home');
     });
 
     $rootScope.$on(MYAUTH_EVENT.notAuthorized, function (event) {
-      $alert({title:event.name, content:'You are not allowed to access the requested page.', type:'warning', duration:3});
+      $alert({title:'Authentication error!', content:'You are not allowed to access the requested page.', type:'warning', duration:3});
     });
 
     angular.forEach([
@@ -234,7 +242,9 @@ angular.module(PKG.name)
       function (v, k) {
         $rootScope.$on(v, function (event) {
           $alert({title:event.name, type:'danger', duration:3});
-          $state.is('login') || $state.go('login');
+          if(!$state.is('login')) {
+            $state.go('login');
+          }
         });
       }
     );
