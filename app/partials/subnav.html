@@ -9,7 +9,7 @@
       </a>
 
       <div class="btn-group">
-        <a class="btn btn-default dropdown-toggle" ng-class="{'active disabled': $state.includes('*.list')}">
+        <a class="btn btn-default dropdown-toggle" bs-dropdown="dropdown" data-placement="bottom-right">
           {{$state.current.data.ddLabel | uppercase}}
           <span class="caret"></span>
         </a>
