@@ -1,15 +1,19 @@
 var module = angular.module(PKG.name+'.directives');
 
-module.directive('mySortable', function($log) {
+module.directive('mySortable', function mySortableDirective ($log) {
+
+  function getPredicate(node) {
+    return node.attr('data-predicate') || node.text();
+  }
+
   return {
     restrict: 'A',
-    link: function(scope, element, attrs) {
+    link: function (scope, element, attrs) {
 
-      var headers = element.find('th'),
-          firstField = headers.eq(0).addClass('predicate').text();
+      var headers = element.find('th');
 
       scope.sortable = {
-        predicate: firstField,
+        predicate: getPredicate(headers.eq(0).addClass('predicate')),
         reverse: false
       };
 
@@ -17,10 +21,10 @@ module.directive('mySortable', function($log) {
 
       headers.on('click', function(event) {
         var th = angular.element(this),
-            field = th.text();
+            predicate = getPredicate(th);
 
         scope.$apply(function() {
-          if(scope.sortable.predicate === field){
+          if(scope.sortable.predicate === predicate){
             scope.sortable.reverse = !scope.sortable.reverse;
             th.find('i').toggleClass('fa-flip-vertical');
           }
@@ -28,7 +32,7 @@ module.directive('mySortable', function($log) {
             headers.removeClass('predicate');
             headers.find('i').removeClass('fa-flip-vertical');
             scope.sortable = {
-              predicate: field,
+              predicate: predicate,
               reverse: false
             };
             th.addClass('predicate');

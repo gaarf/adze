@@ -41,37 +41,14 @@ angular.module(PKG.name)
       .state(abstractSubnav('Cluster', {
         authorizedRoles: MYAUTH_ROLE.all
       }))
-
-        .state('clusters.list', {
-          url: '',
-          templateUrl: '/partials/clusters/list.html',
-          controller: 'ClustersListCtrl',
-          data: {
-            title: 'Live clusters'
-          }
-        })
-
-        .state('clusters.edit', {
-          url: '/edit/:id',
-          templateUrl: '/partials/clusters/edit.html',
-          controller: 'ClustersEditCtrl',
-          data: {
-            title: 'Edit cluster'
-          }
-        })
-
-        .state('clusters.create', {
-          url: '/create',
-          templateUrl: '/partials/clusters/create.html',
-          controller: 'ClustersCreateCtrl',
-          data: {
-            title: 'Create a cluster'
-          }
-        })
+        .state(crud('Cluster', 'list', 'CrudListCtrl', { title: 'Live clusters' }))
+        .state(crud('Cluster', 'detail', 'ClusterEditCtrl')) 
+        .state(crud('Cluster', 'edit', 'ClusterEditCtrl', { title: 'Reconfigure cluster' }))
+        .state(crud('Cluster', 'create', 'ClusterEditCtrl', { title: 'Create a cluster' })) 
 
 
       /*
-        /#/catalog/...
+        /#/templates/...
        */
 
       .state(abstractSubnav('Template', {
@@ -79,19 +56,10 @@ angular.module(PKG.name)
         ddLabel: 'Cluster Templates',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
+        .state(crud('Template', 'list'))
+        .state(crud('Template', 'edit'))
+        .state(crud('Template', 'create')) 
 
-        .state('templates.list', {
-          url: '',
-          templateUrl: '/partials/lorem.html'
-        })
-
-        .state('templates.create', {
-          url: '/create',
-          templateUrl: '/partials/lorem.html',
-          data: {
-            title: 'Create a cluster template'
-          }
-        })
 
 
       /*
@@ -101,19 +69,9 @@ angular.module(PKG.name)
       .state(abstractSubnav('Provider', {
         authorizedRoles: MYAUTH_ROLE.admin
       }))
-
-        .state('providers.list', {
-          url: '',
-          templateUrl: '/partials/lorem.html'
-        })
-
-        .state('providers.create', {
-          url: '/create',
-          templateUrl: '/partials/lorem.html',
-          data: {
-            title: 'Create a provider'
-          }
-        })
+        .state(crud('Provider', 'list'))
+        .state(crud('Provider', 'edit'))
+        .state(crud('Provider', 'create')) 
 
 
       /*
@@ -125,19 +83,10 @@ angular.module(PKG.name)
         ddLabel: 'Hardware Types',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
+        .state(crud('HardwareType', 'list'))
+        .state(crud('HardwareType', 'edit'))
+        .state(crud('HardwareType', 'create')) 
 
-        .state('hardwaretypes.list', {
-          url: '',
-          templateUrl: '/partials/lorem.html'
-        })
-
-        .state('hardwaretypes.create', {
-          url: '/create',
-          templateUrl: '/partials/lorem.html',
-          data: {
-            title: 'Create a hardware type'
-          }
-        })
 
 
       /*
@@ -149,19 +98,10 @@ angular.module(PKG.name)
         ddLabel: 'Image Types',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
+        .state(crud('ImageType', 'list'))
+        .state(crud('ImageType', 'edit'))
+        .state(crud('ImageType', 'create')) 
 
-        .state('imagetypes.list', {
-          url: '',
-          templateUrl: '/partials/lorem.html'
-        })
-
-        .state('imagetypes.create', {
-          url: '/create',
-          templateUrl: '/partials/lorem.html',
-          data: {
-            title: 'Create an image type'
-          }
-        })
 
 
       /*
@@ -170,33 +110,22 @@ angular.module(PKG.name)
       .state(abstractSubnav('Service', {
         authorizedRoles: MYAUTH_ROLE.admin
       }))
-
-        .state('services.list', {
-          url: '',
-          templateUrl: '/partials/lorem.html'
-        })
-
-        .state('services.create', {
-          url: '/create',
-          templateUrl: '/partials/lorem.html',
-          data: {
-            title: 'Create a Service'
-          }
-        })
+        .state(crud('Service', 'list'))
+        .state(crud('Service', 'edit'))
+        .state(crud('Service', 'create')) 
 
       ;
 
 
     /**
      * create an abstract state object by assuming defaults
-     * @param  {String} name of the model to base on eg 'Cluster'
+     * @param  {String} name capitalized name of the model eg 'Cluster'
      * @param  {Object} data optional overrides
      * @return {Object}      state object
      */
-    function abstractSubnav(name, data) {
-      var lower = name.toLowerCase(),
-          plural = name + 's',
-          stateName = plural.toLowerCase()
+    function abstractSubnav (name, data) {
+      var plural = name + 's',
+          stateName = plural.toLowerCase();
       return {
         name: stateName,
         abstract: true,
@@ -206,7 +135,51 @@ angular.module(PKG.name)
         data: angular.extend({
           title: plural,
           ddLabel: plural,
-          ddModel: name
+          modelName: name
+        }, data || {})
+      };
+    }
+
+
+    /**
+     * create a CRUD state object by assuming defaults
+     * @param  {String} name capitalized name of the model eg 'Cluster'
+     * @param  {String} action eg 'edit' or 'list'
+     * @param  {String} ctrl controller to use eg 'CrudEditCtrl'
+     * @param  {Object} data optional overrides
+     * @return {Object}      state object
+     */
+    function crud (name, action, ctrl, data) {
+      var path = name.toLowerCase() + 's',
+          tpl = '/partials/' + path + '/',
+          url = '';
+      switch(action) {
+        case 'create':
+          url = '/create';
+          /* falls through */
+        case 'edit':
+          tpl += 'form.html';
+          /* falls through */
+        default:
+          url = url || '/' + action + (name.match(/Cluster|Provisioner|Tenant/) ? '/:id' : '/:name');
+          if(action.match(/create|edit/)) {
+            break;
+          }
+          /* falls through */
+        case 'list':
+          tpl += action + '.html';
+      }
+      if(!ctrl) {
+        tpl = '/partials/json.html';
+        ctrl = 'Crud' + action.substr(0,1).toUpperCase() + action.substr(1) + 'Ctrl';
+      }
+      return {
+        name: path+'.'+action,
+        url: url,
+        templateUrl: tpl,
+        controller: ctrl,
+        data: angular.extend({
+          title: name + ' ' + action
         }, data || {})
       };
     }
@@ -220,17 +193,17 @@ angular.module(PKG.name)
       });
     }
 
-    $rootScope.$on(MYAUTH_EVENT.loginSuccess, function (event) {
+    $rootScope.$on(MYAUTH_EVENT.loginSuccess, function () {
       $alert({title:'Welcome!', content:'Your tenant is "'+myAuth.currentUser.tenant+'".', type:'success', duration:3});
       $state.go(myAuth.currentUser.hasRole(MYAUTH_ROLE.admin) ? 'home' : 'clusters.list');
     });
 
-    $rootScope.$on(MYAUTH_EVENT.logoutSuccess, function (event) {
+    $rootScope.$on(MYAUTH_EVENT.logoutSuccess, function () {
       $alert({title:'Bye!', content:'You are now logged out.', type:'info', duration:3});
       $state.go('home');
     });
 
-    $rootScope.$on(MYAUTH_EVENT.notAuthorized, function (event) {
+    $rootScope.$on(MYAUTH_EVENT.notAuthorized, function () {
       $alert({title:'Authentication error!', content:'You are not allowed to access the requested page.', type:'warning', duration:3});
     });
 
@@ -239,7 +212,7 @@ angular.module(PKG.name)
         MYAUTH_EVENT.sessionTimeout,
         MYAUTH_EVENT.notAuthenticated
       ], 
-      function (v, k) {
+      function (v) {
         $rootScope.$on(v, function (event) {
           $alert({title:event.name, type:'danger', duration:3});
           if(!$state.is('login')) {
@@ -252,3 +225,6 @@ angular.module(PKG.name)
   })
 
   ;
+
+
+

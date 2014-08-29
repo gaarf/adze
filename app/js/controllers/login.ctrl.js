@@ -1,6 +1,6 @@
 var module = angular.module(PKG.name+'.controllers');
 
-module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, cfpLoadingBar, $timeout, MYAUTH_EVENT) {
+module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, cfpLoadingBar, $timeout, MYAUTH_EVENT, myFocusManager) {
 
   $scope.credentials = myAuth.remembered();
 
@@ -18,7 +18,7 @@ module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, cfpLoad
   $scope.$on('$viewContentLoaded', function() { 
     if(myAuth.isAuthenticated()) {
       $state.go('home');
-      $alert({content:"You are already logged in!", type:'warning', duration:5});
+      $alert({content:'You are already logged in!', type:'warning', duration:5});
     }
     else {
       focusLoginField();
@@ -27,10 +27,10 @@ module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, cfpLoad
 
   $scope.$on(MYAUTH_EVENT.loginFailed, focusLoginField);
 
-  function focusLoginField() { // should be a directive...
+  function focusLoginField() {
     $timeout(function() {
-      document.getElementById($scope.credentials.username ? 'loginPassword' : 'loginUsername').select();
-    }, 10); // the timeout is so this triggers AFTER any potential focus() on an $alert
+      myFocusManager.focus($scope.credentials.username ? 'password' : 'username');
+    }, 10); // the addtl timeout is so this triggers AFTER any potential focus() on an $alert
   }
 
 });

@@ -5,7 +5,7 @@ module.filter('myCapitalizeFilter', function () {
 
   return function(input) {
     input = input ? input.toLowerCase() : '';
-    return input.substring(0,1).toUpperCase() + input.substring(1);
+    return input.substr(0,1).toUpperCase() + input.substr(1);
   };
 
 });
