@@ -1,14 +1,16 @@
 var module = angular.module(PKG.name+'.controllers');
 
 
-module.controller('ClusterEditCtrl', function ($scope, $state, $log, myApi, myFocusManager) {
+module.controller('ClusterFormCtrl', function (CrudFormBase, $scope, $state, $log, myApi, myFocusManager) {
+  CrudFormBase.call(this, $scope, $state);
+
   var id = $state.params.id;
 
-  if(!id) {
+  if(!id) { // creating a new cluster
     $scope.model = new myApi.Cluster({clusterTemplate:'base', numMachines:1});
     myFocusManager.focus('name');
   }
-  else {
+  else { // reconfiguring
     myApi.Cluster.get( {id:id}, function (model) {
 
       // normalize some read-only fields
@@ -16,19 +18,27 @@ module.controller('ClusterEditCtrl', function ($scope, $state, $log, myApi, myFo
       model.clusterTemplate = model.clusterTemplate.name;
 
 
-      $log.log('ClusterEditCtrl', model);
       $scope.model = model;
 
-      myFocusManager.select('name');
+      myFocusManager.select('numMachines');
     });
   }
 
-  $scope.availableTemplates = myApi.Template.query();
+  $scope.showAdvanced = true;
 
-  $scope.doSubmit = function (model){
-    $scope.submitting = true;
+  $scope.availableTemplates = myApi.Template.query(function (avail) {
 
-    model.$save();
-  };
+    $scope.$watch('model.clusterTemplate', function (val) {
+      var chosenTemplate = avail.filter(function (tpl) {
+        return tpl.name === val;
+      })[0];
+
+      console.log('chosenTemplate', chosenTemplate);
+      $scope.chosenTemplate = chosenTemplate;
+
+    }); 
+         
+  });
+
 
 });

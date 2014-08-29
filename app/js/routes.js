@@ -42,9 +42,9 @@ angular.module(PKG.name)
         authorizedRoles: MYAUTH_ROLE.all
       }))
         .state(crud('Cluster', 'list', 'CrudListCtrl', { title: 'Live clusters' }))
-        .state(crud('Cluster', 'detail', 'ClusterEditCtrl')) 
-        .state(crud('Cluster', 'edit', 'ClusterEditCtrl', { title: 'Reconfigure cluster' }))
-        .state(crud('Cluster', 'create', 'ClusterEditCtrl', { title: 'Create a cluster' })) 
+        .state(crud('Cluster', 'detail', 'CrudEditCtrl')) 
+        .state(crud('Cluster', 'edit', 'ClusterFormCtrl', { title: 'Reconfigure cluster' }))
+        .state(crud('Cluster', 'create', 'ClusterFormCtrl', { title: 'Create a cluster' })) 
 
 
       /*

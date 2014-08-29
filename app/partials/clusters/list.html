@@ -3,7 +3,7 @@
     <tr>
       <th>name</th>
       <th>owner</th>
-      <th data-predicate="createTime">creation time</th>
+      <th data-predicate="createTime" data-predicate-default="reverse">creation time</th>
       <th data-predicate="clusterTemplate">template</th>
       <th data-predicate="numNodes"># of nodes</th>
       <th>status</th>
@@ -23,9 +23,9 @@
       <td>{{item.numNodes}}</td>
 
       <td><span class="label" ng-class="{
-        'label-success': item.status==='ACTIVE',
-        'label-info': item.status!=='ACTIVE'
-      }">{{item.status}}</span></td>
+        ACTIVE: 'label-success', 
+        INCOMPLETE: 'label-danger'
+      }[item.status] || 'label-info'">{{item.status}}</span></td>
 
     </tr>
   </tbody>

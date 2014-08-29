@@ -58,6 +58,6 @@ angular
 
   .run(function ($rootScope, $alert, MYAPI_EVENT){
     $rootScope.$on(MYAPI_EVENT.error, function (event, rejection) {
-      $alert({title:'API error', content:rejection.data, type:'danger', duration:3});
+      $alert({title:'API error '+rejection.status, content:rejection.data, type:'danger', duration:3});
     });
   });

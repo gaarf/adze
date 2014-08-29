@@ -1,22 +1,46 @@
 var module = angular.module(PKG.name+'.controllers');
 
 
-module.controller('CrudListCtrl', function ($scope, $log) {
+module.controller('CrudListCtrl', function ($scope) {
   // we already fetched the list in the parent view
   $scope.$watch('subnavList', function (list) {
     if(list) {
-      $log.log('CrudListCtrl', list);
-      $scope.list = list;      
+      $scope.list = list;
     }
   });
+
+  // but we want it to be fresh
+  if($scope.subnavList && $scope.subnavList.$resolved) {
+    $scope.fetchSubnavList()
+  }
 });
 
 
-module.controller('CrudEditCtrl', function ($scope, $state, $log, myApi) {
+var CrudFormBase = function ($scope, $state) {
+  $scope.doSubmit = function (model){
+    $scope.submitting = true;
+
+    model.$save()
+      .then(function () {
+        $scope.fetchSubnavList();
+        $state.go('^.list');
+      })
+      .finally(function () {
+        $scope.submitting = false;
+      });
+  };
+};
+
+
+module.value('CrudFormBase', CrudFormBase);
+
+
+module.controller('CrudEditCtrl', function ($scope, $state, myApi) {
+  CrudFormBase.call(this, $scope, $state);
+
   myApi[$state.current.data.modelName].get( 
     $state.params, 
     function(model) {
-      $log.log('CrudEditCtrl', model);
       $scope.model = model;
     }
   );
@@ -24,8 +48,8 @@ module.controller('CrudEditCtrl', function ($scope, $state, $log, myApi) {
 
 
 
-module.controller('CrudCreateCtrl', function ($scope, $state, $log, myApi) {
-  var model = new myApi[$state.current.data.modelName]();
-  $scope.model = model;
-  $log.log('CrudCreateCtrl', model);
+module.controller('CrudCreateCtrl', function ($scope, $state, myApi) {
+  CrudFormBase.call(this, $scope, $state);
+
+  $scope.model = new myApi[$state.current.data.modelName]();
 });

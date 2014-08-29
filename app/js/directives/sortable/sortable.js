@@ -10,11 +10,26 @@ module.directive('mySortable', function mySortableDirective ($log) {
     restrict: 'A',
     link: function (scope, element, attrs) {
 
-      var headers = element.find('th');
+      var headers = element.find('th'),
+          defaultPredicate,
+          defaultReverse;
+
+      angular.forEach(headers, function(th) {
+        th = angular.element(th);
+        var a = th.attr('data-predicate-default');
+        if(angular.isDefined(a)) {
+          defaultPredicate = th;
+          defaultReverse = (a==='reverse');
+        }
+      });
+
+      if(!defaultPredicate) {
+        defaultPredicate = headers.eq(0);
+      }
 
       scope.sortable = {
-        predicate: getPredicate(headers.eq(0).addClass('predicate')),
-        reverse: false
+        predicate: getPredicate(defaultPredicate.addClass('predicate')),
+        reverse: defaultReverse
       };
 
       headers.append('<i class="fa fa-toggle-down"></i>');

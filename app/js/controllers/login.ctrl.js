@@ -9,10 +9,12 @@ module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, cfpLoad
   $scope.doLogin = function (c) {
     $scope.submitting = true;
     cfpLoadingBar.start();
-    myAuth.login(c)['finally'](function(){
-      $scope.submitting = false;
-      cfpLoadingBar.complete();
-    });
+
+    myAuth.login(c)
+      .finally(function(){
+        $scope.submitting = false;
+        cfpLoadingBar.complete();
+      });
   };
 
   $scope.$on('$viewContentLoaded', function() { 
@@ -29,7 +31,7 @@ module.controller('LoginCtrl', function ($scope, myAuth, $alert, $state, cfpLoad
 
   function focusLoginField() {
     $timeout(function() {
-      myFocusManager.focus($scope.credentials.username ? 'password' : 'username');
+      myFocusManager.select($scope.credentials.username ? 'password' : 'username');
     }, 10); // the addtl timeout is so this triggers AFTER any potential focus() on an $alert
   }
 
