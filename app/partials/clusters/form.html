@@ -7,6 +7,7 @@
         placeholder="Name" 
         my-focus="name"
         ng-disabled="model.id"
+        ng-pattern="/^\w+$/"
         ng-model="model.name" required/>
     </div>
   </div>
@@ -27,6 +28,7 @@
       <input id="inputClusterNumMachines" type="number" name="numMachines" class="form-control"
         my-focus="numMachines"
         ng-model="model.numMachines"
+        ng-pattern="/^\d+$/"
         min="1" required/>
     </div>
 

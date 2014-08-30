@@ -1,0 +1,36 @@
+<div class="form-group">
+  <label for="inputLeaseDays" class="col-xs-2 control-label">Lease duration</label>
+  <div class="col-xs-10 col-sm-8 col-md-6">
+
+    <fieldset class="row">
+      <div class="col-xs-4">
+        <div class="input-group">
+          <label for="inputLeaseDays" class="input-group-addon">Days</label>
+          <input id="inputLeaseDays" class="form-control" type="number" 
+            ng-model="leaseDuration.days"
+            ng-pattern="/^\d+$/"
+            min="0" required/>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <div class="input-group">
+          <label for="inputLeaseHours"class="input-group-addon">Hours</label>
+          <input id="inputLeaseHours" class="form-control" type="number" 
+            ng-model="leaseDuration.hours"
+            ng-pattern="/^\d+$/"
+            min="0" required/>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <div class="input-group">
+          <label for="inputLeaseMinutes" class="input-group-addon">Minutes</label>
+          <input id="inputLeaseMinutes" class="form-control" type="number" 
+            ng-model="leaseDuration.minutes"
+            ng-pattern="/^\d+$/"
+            min="0" required/>
+        </div>
+      </div>
+    </fieldset>
+
+  </div>
+</div>
