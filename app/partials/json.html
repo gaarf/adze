@@ -1,3 +1,7 @@
 <pre ng-show="model">{{model | json}}</pre>
 
-<pre ng-repeat="item in list">{{item | json}}</pre>
+<ul ng-hide="model">
+  <li ng-repeat="item in list">
+    <code><a ui-sref="^.edit(item)">{{item.name || item.id}}</a></code>
+  </li>
+</ul>

@@ -28,16 +28,17 @@ require('cors-anywhere')
   .listen(8081, '0.0.0.0', function() {
     console.log(corsLabel+' listening on port 8081');
   })
-  .proxy.on('start', function (res) {
-    var location = res.corsAnywhereRequestState.location;
-    console.log(
-      '\n%s %s\n\x1B[1m%s\x1B[22m %s\x1B[36m%s\x1B[39m',
-      corsLabel,
-      (new Date).toUTCString(),
-      res.method, 
-      (location.isHttps ? 'https://' : 'http://') + location.host,
-      location.pathAndQueryString || '/'
-    );
-  });
+  .proxy
+    .on('start', function (res) {
+      var location = res.corsAnywhereRequestState.location;
+      console.log(
+        '\n%s %s\n\x1B[1m%s\x1B[22m %s\x1B[36m%s\x1B[39m',
+        corsLabel,
+        (new Date).toUTCString(),
+        res.method, 
+        (location.isHttps ? 'https://' : 'http://') + location.host,
+        location.pathAndQueryString || '/'
+      );
+    });
 
 

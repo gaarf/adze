@@ -1,7 +1,7 @@
 var module = angular.module(PKG.name+'.controllers');
 
 
-module.controller('CrudListCtrl', function ($scope) {
+module.controller('CrudListCtrl', function ($scope, $state) {
   // we already fetched the list in the parent view
   $scope.$watch('subnavList', function (list) {
     if(list) {
@@ -10,8 +10,8 @@ module.controller('CrudListCtrl', function ($scope) {
   });
 
   // but we want it to be fresh
-  if($scope.subnavList && $scope.subnavList.$resolved) {
-    $scope.fetchSubnavList()
+  if(!$scope.subnavList || $scope.subnavList.$resolved) {
+    $scope.fetchSubnavList();
   }
 });
 
