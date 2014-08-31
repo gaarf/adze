@@ -5,7 +5,7 @@
     <div class="col-xs-10">
       <input id="inputClusterName" type="text" name="name" class="form-control" 
         placeholder="Name" 
-        my-focus="name"
+        my-focus="inputClusterName"
         ng-disabled="model.id"
         ng-pattern="/^\w+$/"
         ng-model="model.name" required/>
@@ -26,7 +26,7 @@
     <label for="inputClusterNumMachines" class="col-xs-2 control-label"># of nodes</label>
     <div class="col-xs-3">
       <input id="inputClusterNumMachines" type="number" name="numMachines" class="form-control"
-        my-focus="numMachines"
+        ng-disabled="model.id"
         ng-model="model.numMachines"
         ng-pattern="/^\d+$/"
         min="1" required/>
@@ -39,7 +39,9 @@
   <div class="form-group">
     <div class="col-xs-2 text-right">
       <a href="" ng-click="showAdvanced = true" ng-hide="showAdvanced">
-        show advanced
+        <small>
+          advanced<span class="fa fa-toggle-right fa-fw"></span>
+        </small>
       </a>
     </div>
     <div class="col-xs-10">
@@ -51,5 +53,3 @@
   </div>
 
 </form>
-
-<pre>{{model | json}}</pre>

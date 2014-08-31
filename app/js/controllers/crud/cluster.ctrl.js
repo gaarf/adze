@@ -6,43 +6,9 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
 
   $scope.model = new myApi.Cluster({id:id, clusterTemplate:'base', numMachines:1});
 
-  $scope.showAdvanced = true;
+  $scope.showAdvanced = !!id;
 
   $scope.leaseDuration = myHelpers.parseMilliseconds(0);
-
-
-  /*
-  updating a cluster means reconfiguring it, so we cannot use CrudFormBase
-   */
-  $scope.doSubmit = function (model){
-    $scope.submitting = true;
-
-    var promise;
-
-    if(id) { // reconfiguring
-      var reconf = myApi.ClusterConfig.update({clusterId:id}, {
-        config: model.config
-      });
-      console.log(reconf);
-      promise = reconf.$promise;
-    }
-    else { // creating
-      promise = model.$save();
-    }
-
-    promise
-      .then(function () {
-        $scope.fetchSubnavList();
-        $state.go('^.list');
-      })
-      .finally(function () {
-        $scope.submitting = false;
-      });
-  };
-
-
-
-
 
   var allHardware  = myApi.HardwareType.query(),
       allImages = myApi.ImageType.query(),
@@ -68,8 +34,6 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
         return tpl.name === name;
       })[0];
 
-      console.log('chosen template', chosen);
-
       $scope.availableHardware = allHardware.filter(function (item) {
         return chosen.compatibility.hardwaretypes.indexOf(item.name)>=0;
       });
@@ -86,8 +50,14 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
       angular.extend($scope.model, chosen.defaults);
     }); 
 
-  });
 
+    $scope.$watch('model.provider', function (name) {
+      $scope.chosenProvider = $scope.availableProviders.filter(function (p) {
+        return p.name === name;
+      })[0];
+    }); 
+
+  });
 
 
 
@@ -101,7 +71,7 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
     }); 
 
 
-    myFocusManager.focus('name');
+    myFocusManager.focus('inputClusterName');
 
 
 
@@ -128,10 +98,42 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
 
       $scope.leaseDuration = myHelpers.parseMilliseconds(data.expireTime);
 
-      myFocusManager.select('numMachines');
+      myFocusManager.select('inputClusterConfig');
     });
 
 
 
   }
+
+
+
+  /*
+  updating a cluster means reconfiguring it, so we cannot use CrudFormBase
+   */
+  $scope.doSubmit = function (model){
+    $scope.submitting = true;
+
+    var promise;
+
+    if(id) { // reconfiguring
+      promise = myApi.ClusterConfig.update({clusterId:id}, {
+        config: model.config
+      }).$promise;
+    }
+    else { // creating
+      promise = model.$save();
+    }
+
+    promise
+      .then(function () {
+        $scope.fetchSubnavList();
+        $state.go('^.list');
+      })
+      .finally(function () {
+        $scope.submitting = false;
+      });
+  };
+
+
+
 });

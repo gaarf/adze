@@ -11,7 +11,9 @@ module.factory('myApi_providers', function($resource, MYAPI_PREFIX){
           method: 'PUT'
         }
       }
-    )
+    ),
+
+    ProviderType: $resource(MYAPI_PREFIX + 'providertypes/:type')
 
   };
 

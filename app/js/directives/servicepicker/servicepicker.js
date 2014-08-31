@@ -3,7 +3,7 @@ var module = angular.module(PKG.name+'.directives');
 module.directive('myServicePicker', function myServicePickerDirective () {
   return {
     restrict: 'E',
-    templateUrl: 'svcpicker/svcpicker.tpl',
+    templateUrl: 'servicepicker/servicepicker.tpl',
 
     scope: {
       model: '=',
