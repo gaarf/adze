@@ -28,7 +28,7 @@ module.directive('myProviderFields', function myProviderFieldsDirective () {
         typeReqs = [];
 
         angular.forEach(['user', 'admin'], function (role) {
-          var p = providerType.parameters[role];
+          var p = providerType && providerType.parameters[role];
           if(p) {
             if(p.required) {
               typeReqs = typeReqs.concat(p.required);

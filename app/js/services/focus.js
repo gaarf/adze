@@ -17,7 +17,7 @@ module.service('myFocusManager', function myFocusManagerService ($rootScope, $lo
     this.is[k] = {};
     this.is[k][v] = Date.now();
     _last = k;
-  };
+  }
 
   /**
    * triggers focus() on element with my-focus = k

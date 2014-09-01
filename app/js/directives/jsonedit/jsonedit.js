@@ -16,11 +16,11 @@ angular.module(PKG.name+'.directives').directive('myJsonEdit', function () {
     link: function (scope, element, attrs, ngModelCtrl) {
 
       function setEditing (value) {
-        scope.jsonEditing = angular.copy(JSON2String(value));
+        scope.jsonEditing = angular.copy(json2string(value));
       }
 
       function updateModel (value) {
-        scope.model = string2JSON(value);
+        scope.model = string2json(value);
       }
 
       function setValid() {
@@ -31,7 +31,7 @@ angular.module(PKG.name+'.directives').directive('myJsonEdit', function () {
         ngModelCtrl.$setValidity('json', false);
       }
 
-      function string2JSON(text) {
+      function string2json(text) {
         try {
           return angular.fromJson(text);
         } catch (err) {
@@ -40,7 +40,7 @@ angular.module(PKG.name+'.directives').directive('myJsonEdit', function () {
         }
       }
 
-      function JSON2String(obj) {
+      function json2string(obj) {
         // better than JSON.stringify(), because it formats + filters $$hashKey etc.
         // NOTE that this will remove all $-prefixed values
         return angular.toJson(obj, true);
@@ -61,7 +61,7 @@ angular.module(PKG.name+'.directives').directive('myJsonEdit', function () {
 
       //check for changes going out
       scope.$watch('jsonEditing', function (newval, oldval) {
-        if (newval != oldval) {
+        if (newval !== oldval) {
           if (isValidJson(newval)) {
             setValid();
             updateModel(newval);
@@ -73,7 +73,7 @@ angular.module(PKG.name+'.directives').directive('myJsonEdit', function () {
 
       //check for changes coming in
       scope.$watch('model', function (newval, oldval) {
-        if (newval != oldval) {
+        if (newval !== oldval) {
           setEditing(newval);
         }
       }, true);

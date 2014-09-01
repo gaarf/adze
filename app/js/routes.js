@@ -56,7 +56,7 @@ angular.module(PKG.name)
         ddLabel: 'Cluster Templates',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
-        .state(crud('Template', 'list'))
+        .state(crud('Template', 'list', 'CrudListCtrl'))
         .state(crud('Template', 'edit'))
         .state(crud('Template', 'create')) 
 
@@ -69,7 +69,7 @@ angular.module(PKG.name)
       .state(abstractSubnav('Provider', {
         authorizedRoles: MYAUTH_ROLE.admin
       }))
-        .state(crud('Provider', 'list'))
+        .state(crud('Provider', 'list', 'CrudListCtrl'))
         .state(crud('Provider', 'edit'))
         .state(crud('Provider', 'create')) 
 
@@ -83,7 +83,7 @@ angular.module(PKG.name)
         ddLabel: 'Hardware Types',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
-        .state(crud('HardwareType', 'list'))
+        .state(crud('HardwareType', 'list', 'CrudListCtrl'))
         .state(crud('HardwareType', 'edit'))
         .state(crud('HardwareType', 'create')) 
 
@@ -98,7 +98,7 @@ angular.module(PKG.name)
         ddLabel: 'Image Types',
         authorizedRoles: MYAUTH_ROLE.admin
       }))
-        .state(crud('ImageType', 'list'))
+        .state(crud('ImageType', 'list', 'CrudListCtrl'))
         .state(crud('ImageType', 'edit'))
         .state(crud('ImageType', 'create')) 
 
@@ -110,7 +110,7 @@ angular.module(PKG.name)
       .state(abstractSubnav('Service', {
         authorizedRoles: MYAUTH_ROLE.admin
       }))
-        .state(crud('Service', 'list'))
+        .state(crud('Service', 'list', 'CrudListCtrl'))
         .state(crud('Service', 'edit'))
         .state(crud('Service', 'create')) 
 

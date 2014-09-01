@@ -6,7 +6,8 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
 
   $scope.model = new myApi.Cluster({id:id, clusterTemplate:'base', numMachines:1});
 
-  $scope.showAdvanced = !!id;
+  $scope.showAdvanced = false;
+  $scope.showConfig = !!id;
 
   $scope.leaseDuration = myHelpers.parseMilliseconds(0);
 

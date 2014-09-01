@@ -37,7 +37,7 @@ describe('service', function() {
 
         it('does not authenticate', function() {
           expect(myAuth.isAuthenticated()).toBe(false);
-          expect($rootScope.$broadcast).toHaveBeenCalledWith('auth-login-failed');
+          expect($rootScope.$broadcast).toHaveBeenCalledWith('myauth-login-failed');
         });
       });
 
@@ -52,7 +52,7 @@ describe('service', function() {
           expect($sessionStorage.currentUser.username).toEqual('test');
           expect($rootScope.currentUser.username).toEqual('test');
           expect($rootScope.currentUser.hasRole).toEqual(jasmine.any(Function));
-          expect($rootScope.$broadcast).toHaveBeenCalledWith('auth-login-success');
+          expect($rootScope.$broadcast).toHaveBeenCalledWith('myauth-login-success');
         });
 
         describe('logout', function() {
@@ -63,7 +63,7 @@ describe('service', function() {
             expect(myAuth.isAuthenticated()).toBe(false);
             expect($sessionStorage.currentUser).toBeFalsy();
             expect($rootScope.currentUser).toBeFalsy();
-            expect($rootScope.$broadcast).toHaveBeenCalledWith('auth-logout-success');
+            expect($rootScope.$broadcast).toHaveBeenCalledWith('myauth-logout-success');
           });
         });
       });

@@ -36,16 +36,28 @@
 
   <div ng-include="'/partials/clusters/form-advanced.html'" ng-show="showAdvanced"></div>
 
+  <div class="form-group" ng-show="showConfig">
+    <label for="inputClusterConfig" class="col-xs-2 control-label">Config</label>
+    <div class="col-xs-10">
+      <textarea id="inputClusterConfig" class="form-control" name="config" rows="10"
+        my-json-edit="model.config"
+        my-focus="inputClusterConfig"
+        ></textarea>
+    </div>
+  </div>
+
   <div class="form-group">
     <div class="col-xs-2 text-right">
       <p class="form-control-static">
-        <a href="" ng-click="showAdvanced = true" ng-hide="showAdvanced">
+        <a href="" ng-click="showAdvanced = true; showConfig = true" ng-hide="showAdvanced">
           <small>advanced<span class="fa fa-toggle-right fa-fw"></span></small>
         </a>
       </p>
     </div>
-    <div class="col-xs-10" ng-class="{'text-right': showAdvanced}">
-      <button type="submit" class="btn btn-primary" ng-disabled="submitting || clusterForm.$invalid">
+    <div class="col-xs-10">
+      <button type="submit" class="btn btn-primary" 
+        ng-disabled="submitting || clusterForm.$invalid">
+        <span class="fa fa-save"></span>
         <span ng-show="model.id">Update</span>
         <span ng-hide="model.id">Create</span>
       </button>
@@ -54,5 +66,3 @@
 
 </form>
 
-
-<pre>{{model | json}}</pre>
