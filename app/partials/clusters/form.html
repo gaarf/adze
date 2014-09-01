@@ -38,13 +38,13 @@
 
   <div class="form-group">
     <div class="col-xs-2 text-right">
-      <a href="" ng-click="showAdvanced = true" ng-hide="showAdvanced">
-        <small>
-          advanced<span class="fa fa-toggle-right fa-fw"></span>
-        </small>
-      </a>
+      <p class="form-control-static">
+        <a href="" ng-click="showAdvanced = true" ng-hide="showAdvanced">
+          <small>advanced<span class="fa fa-toggle-right fa-fw"></span></small>
+        </a>
+      </p>
     </div>
-    <div class="col-xs-10">
+    <div class="col-xs-10" ng-class="{'text-right': showAdvanced}">
       <button type="submit" class="btn btn-primary" ng-disabled="submitting || clusterForm.$invalid">
         <span ng-show="model.id">Update</span>
         <span ng-hide="model.id">Create</span>
@@ -53,3 +53,6 @@
   </div>
 
 </form>
+
+
+<pre>{{model | json}}</pre>

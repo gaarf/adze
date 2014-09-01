@@ -14,8 +14,9 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
       allImages = myApi.ImageType.query(),
       allServices = myApi.Service.query();
 
-  $scope.availableProviders = myApi.Provider.query();
   $scope.availableTemplates = myApi.Template.query();
+  $scope.availableProviders = myApi.Provider.query();
+  $scope.chosenProvider = {};
   $scope.availableHardware = [];
   $scope.availableImages = [];
   $scope.availableServices = [];
@@ -52,9 +53,14 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
 
 
     $scope.$watch('model.provider', function (name) {
-      $scope.chosenProvider = $scope.availableProviders.filter(function (p) {
+      var chosen = $scope.availableProviders.filter(function (p) {
         return p.name === name;
       })[0];
+
+      console.log('chosen provider', chosen);
+
+      $scope.chosenProvider = chosen;
+
     }); 
 
   });
