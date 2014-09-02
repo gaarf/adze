@@ -13,7 +13,7 @@ module.directive('myConfirmable', function myConfirmableDirective ($window, $mod
 
         // TODO: replace with a nice modal
 
-        if($window.confirm("Are you sure?")) {
+        if($window.confirm('Are you sure?')) {
           confirmed();
         }
 
