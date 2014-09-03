@@ -36,6 +36,16 @@ module.controller('ClusterFormCtrl', function ($scope, $state, $q, myApi, myFocu
         return tpl.name === name;
       })[0];
 
+      $scope.chosenTemplate = chosen;
+
+      $scope.model.numMachines = Math.min(
+        Math.max(
+          $scope.model.numMachines,
+          chosen.constraints.size.min
+        ), 
+        chosen.constraints.size.max
+      );
+
       $scope.availableHardware = allHardware.filter(function (item) {
         return chosen.compatibility.hardwaretypes.indexOf(item.name)>=0;
       });

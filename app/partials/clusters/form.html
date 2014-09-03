@@ -29,7 +29,10 @@
         ng-disabled="model.id"
         ng-model="model.numMachines"
         ng-pattern="/^\d+$/"
-        min="1" required/>
+        min="{{chosenTemplate.constraints.size.min}}" 
+        max="{{chosenTemplate.constraints.size.max}}"
+        required/>
+
     </div>
 
   </div>
