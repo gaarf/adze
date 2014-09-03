@@ -8,7 +8,8 @@ module.exports = function(config){
       'dist/bundle/app.js',
       'dist/bundle/tpl.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'test/unit/**/*.spec.js'
+      'app/js/**/*.spec.js',
+      'test/unit/**/*.js'
     ],
 
     autoWatch : true,

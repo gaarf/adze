@@ -13,7 +13,7 @@ module.factory('myApi_providers', function($resource, MYAPI_PREFIX){
       }
     ),
 
-    ProviderType: $resource(MYAPI_PREFIX + 'providertypes/:type')
+    ProviderType: $resource(MYAPI_PREFIX + 'plugins/providertypes/:type')
 
   };
 

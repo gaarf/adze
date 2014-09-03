@@ -12,20 +12,21 @@ function plumber() {
 
 gulp.task('css:lib', ['fonts'], function() {
   return gulp.src([
+      './app/css/bootstrap.less',
       './bower_components/angular/angular-csp.css',
-      './bower_components/bootstrap/dist/css/bootstrap.min.css',
-      './bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
       './bower_components/angular-loading-bar/build/loading-bar.min.css',
       './bower_components/angular-motion/dist/angular-motion.min.css',
       './bower_components/font-awesome/css/font-awesome.min.css'
     ])
+    .pipe(plumber())
+    .pipe(plug.if('*.less', plug.less()))
     .pipe(plug.concat('lib.css'))
     .pipe(gulp.dest('./dist/bundle'));
 });
 
 gulp.task('fonts', function() {
   return gulp.src([
-      './bower_components/bootstrap/dist/fonts/*',
+      // './bower_components/bootstrap/dist/fonts/*',
       './bower_components/font-awesome/fonts/*'
     ])
     .pipe(gulp.dest('./dist/fonts'));
@@ -34,7 +35,8 @@ gulp.task('fonts', function() {
 gulp.task('css:app', function() {
   return gulp.src([
       './app/js/directives/**/*.{less,css}',
-      './app/css/style.less'
+      './app/css/themes/default.less',
+      './app/css/common.less'
     ])
     .pipe(plumber())
     .pipe(plug.if('*.less', plug.less()))
@@ -81,7 +83,9 @@ gulp.task('js:app', function() {
     name: pkg.name,
     v: pkg.version
   });
-  return gulp.src('./app/**/*.js')
+  return gulp.src([
+      './app/**/*.js'
+    ])
     .pipe(plumber())
     .pipe(plug.ngAnnotate())
     .pipe(plug.wrapper({
@@ -106,7 +110,6 @@ gulp.task('tpl', function() {
     gulp.src([
       './app/js/directives/**/*.tpl'
     ])
-
       .pipe(plug.angularTemplatecache({
         module: pkg.name + '.directives'
       })),
@@ -114,7 +117,6 @@ gulp.task('tpl', function() {
     gulp.src([
       './app/partials/home.html'
     ])
-
       .pipe(plug.angularTemplatecache({
         module: pkg.name,
         base: __dirname + '/app',

@@ -2,7 +2,7 @@ var module = angular.module(PKG.name+'.services');
 
 module.factory('MYAPI_PREFIX', function($location){
   return $location.protocol() + '://' + $location.host() + 
-                ':8081/0.0.0.0:55054/v1/loom/';
+                ':8081/0.0.0.0:55054/v2/';
 });
 
 
