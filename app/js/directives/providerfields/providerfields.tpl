@@ -1,4 +1,4 @@
-<fieldset class="row">
+<div class="row">
   <div class="col-xs-6" ng-repeat="(key, field) in fields">
 
     <div class="checkbox" ng-if="field.type=='checkbox'">
@@ -36,4 +36,4 @@
     </div>
 
   </div>
-</fieldset>
+</div>

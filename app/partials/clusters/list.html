@@ -4,7 +4,7 @@
       <th>name</th>
       <th>owner</th>
       <th data-predicate="createTime" data-predicate-default="reverse">creation time</th>
-      <th data-predicate="clusterTemplate">template</th>
+      <th data-predicate="clusterTemplate.name">template</th>
       <th data-predicate="numNodes"># of nodes</th>
       <th>status</th>
     </tr>
@@ -18,7 +18,7 @@
 
       <td>{{item.createTime | date:'short'}}</td>
 
-      <td>{{item.clusterTemplate}}</td>
+      <td>{{item.clusterTemplate.name}}</td>
 
       <td>{{item.numNodes}}</td>
 

@@ -34,7 +34,9 @@ module.directive('myProviderFields', function myProviderFieldsDirective () {
               typeReqs = typeReqs.concat(p.required);
             }
             angular.forEach(p.fields, function (val, key) {
-              fields[key] = val;
+              if(role==='user' || val.override) {
+                fields[key] = val;
+              }
             });
           }
         });
